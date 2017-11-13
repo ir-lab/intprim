@@ -1,0 +1,2 @@
+# intprim
+Interaction Primitives library
