@@ -1,5 +1,5 @@
 # intprim
-The Interaction Primitives library from the Interactive Robotics Lab at Arizona State University.
+The Interaction Primitives Python library from the Interactive Robotics Lab at Arizona State University.
 
 This library implements the Bayesian Interaction Primitives algorithm.
 
@@ -15,12 +15,11 @@ To run the included examples, in a Python environment run:
 
 ```python
 import intprim as ip
->>> import intprim.examples
->>>
->>>
->>> ip.examples.minimal()
->>> ip.examples.spatial_robustness()
->>> ip.examples.temporal_robustness()
+import intprim.examples
+
+ip.examples.minimal()
+ip.examples.spatial_robustness()
+ip.examples.temporal_robustness()
 ```
 
 The source code for the examples can be viewed under intprim/examples.
