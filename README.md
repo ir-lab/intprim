@@ -1,7 +1,7 @@
 # intprim
 The Interaction Primitives library from the Interactive Robotics Lab at Arizona State University.
 
-This library implements Bayesian Interaction Primitives introduced in [1].
+This library implements the Bayesian Interaction Primitives algorithm.
 
 ## Installation
 To install this library, download the package and in the root directory run:
