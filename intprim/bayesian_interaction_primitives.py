@@ -1,226 +1,211 @@
 #!python
-"""@package intprim
-This module implements Bayesian Interaction Primitives and the corresponding EKF SLAM algorithm.
-"""
-
-import basis_model
-from enum import Enum
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
+##
+#   This module defines the BayesianInteractionPrimitive class, which is the user-facing class for deploying IP/BIP/eBIP.
+#
+#   @author Joseph Campbell <jacampb1@asu.edu>, Interactive Robotics Lab, Arizona State University
+import intprim.constants
 import numpy as np
-import os
 import pickle
-import scipy.linalg
+import sklearn.preprocessing
 
-DTYPE = np.float64
-DEFAULT_NUM_SAMPLES = 100
-
-class EKFSLAM(object):
-    """The EKFSLAM class localizes an interaction in time and space via EKF SLAM.
-    """
-    def __init__(self, mean_basis_weights, cov_basis_weights, basis_model, measurement_dimension, phase_velocity, phase_var):
-        """The constructor function.
-        """
-        self.state_dimension = 2 + len(mean_basis_weights)
-
-        self.measurement_dimension = measurement_dimension
-
-        # Initial phase is 0 while the landmarks are the mean basis weights of the demonstrations.
-        self.state_mean = np.zeros(self.state_dimension, dtype = DTYPE)
-        self.state_mean[0] = 0.0
-        self.state_mean[1] = phase_velocity
-        self.state_mean[2:] = mean_basis_weights.astype(DTYPE)
-
-        # Covariance starts at 0 for phase since we assume trajectories start at the initial point
-        # The covariance for the basis weights is the same as computed from demonstrations
-        self.state_cov = np.zeros((self.state_dimension, self.state_dimension), dtype = DTYPE)
-
-        # Assume discrete white noise model for the phase/phase velocity.
-        self.state_cov[0:2, 0:2] = np.array([[.25, .5], [.5, 1.0]]) * phase_var
-        self.state_cov[2:, 2:] = cov_basis_weights
-
-        self.identity_cov = np.eye(self.state_cov.shape[0], dtype = DTYPE)
-
-        self.basis_model = basis_model
-        self.mean_basis_weights = mean_basis_weights.astype(DTYPE)
-        self.cov_basis_weights = cov_basis_weights.astype(DTYPE)
-
-    def get_measurement_model(self):
-        """Computes the measurement model for an EKF.
-        """
-        measurement_model = np.zeros((self.measurement_dimension, self.state_dimension), dtype = DTYPE)
-
-        f = lambda x, c: (np.exp(-(np.array([x - y for y in c], dtype = DTYPE) ** 2) / (2.0 * self.basis_model.scale)) * np.array([x - y for y in c], dtype = DTYPE)) * -(2.0 / (2.0 * self.basis_model.scale))
-
-        basis_funcs = f(self.state_mean[0], self.basis_model.centers)
-
-        for degree in range(self.measurement_dimension):
-            offset = degree * self.basis_model.degree
-            measurement_model[degree, 0] = np.dot(basis_funcs.T, self.state_mean[2 + offset: 2 + offset + self.basis_model.degree])
-
-        basis_matrix = self.basis_model.get_block_diagonal_basis_matrix(np.asarray(self.state_mean[:1]), self.measurement_dimension)
-
-        measurement_model[:, 2:] = basis_matrix.T
-
-        return measurement_model
-
-    def localize(self, measurement, measurement_noise):
-        """Accepts a measurement matrix (vector of observed states) along with noise and iteratively updates the filter state.
-        """
-        for measurement_idx in range(measurement.shape[0]):
-            # Assuming a constant velocity model, make our state prediction.
-            self.state_mean[0] += self.state_mean[1]
-
-            basis_matrix = self.basis_model.get_block_diagonal_basis_matrix(np.asarray(self.state_mean[:1]), self.measurement_dimension)
-
-            predicted_measurement = np.dot(basis_matrix.T, self.state_mean[2:]).flatten()
-
-            measurement_model = self.get_measurement_model()
-
-            kalman_gain = np.dot(self.state_cov, measurement_model.T)
-            kalman_gain = kalman_gain.dot(scipy.linalg.inv(np.dot(measurement_model, self.state_cov).dot(measurement_model.T) + measurement_noise))
-
-            self.state_mean += np.dot(kalman_gain, measurement[measurement_idx] - predicted_measurement)
-
-            self.state_cov = (self.identity_cov - np.dot(kalman_gain, measurement_model)).dot(self.state_cov)
-
-        # Restrict final output to [0.0, 1.0] so it's a valid phase.
-        if(self.state_mean[0] > 1.0):
-            self.state_mean[0] = 1.0
-        elif(self.state_mean[0] < 0.0):
-            self.state_mean[0] = 0.0
-
-        # Return phase and updated weights
-        return self.state_mean[0], self.state_mean[2:]
-
+##
+#   The BayesianInteractionPrimitive class is responsible for training an Interaction Primitive model from demonstrations as well as performing run-time inference.
+#   Support for importing and exporting a trained model as well
+#
 class BayesianInteractionPrimitive(object):
-    """The BayesianInteractionPrimitive class performs training and inference for a cooperative scenario.
-    """
-    def __init__(self, num_dof = 0, dof_names = [], basis_degree = 0):
-        """The constructor function.
-        """
-        self.num_dof = num_dof
-        self.dof_names = dof_names
-        self.basis_degree = basis_degree
+    ##
+    #   The initialization method for BayesianInteractionPrimitives.
+    #
+    #   @param basis_model The basis model corresponding to this state space.
+    #   @param scaling_groups If provided, used to indicate which degrees of freedom should be scaled as a group.
+    #
+    def __init__(self, basis_model, scaling_groups = None):
+        self.basis_model = basis_model
+        self.scaling_groups = scaling_groups
 
-        self.basis_model = basis_model.GaussianBasisModel(self.basis_degree)
-        self.basis_weights = []
-
+        self.basis_weights = np.array([], dtype = intprim.constants.DTYPE)
         self.filter = None
+        self.prior_fitted = False
 
+        self.scalers = []
+        self.init_scalers()
+
+    ##
+    #   Exports the internal state information from this model.
+    #   Allows one to export a trained model and import it again without requiring training.
+    #
+    #   @param file_name The name of the export file.
+    #
     def export_data(self, file_name):
-        """Exports the internal data to the given file name.
-        """
         print("Exporting data to: " + str(file_name))
 
         data_struct = {
-            "num_dof" : self.num_dof,
-            "dof_names" : self.dof_names,
-            "basis_degree" : self.basis_degree,
-            "basis_weights" : self.basis_weights
+            "basis_weights" : self.basis_weights,
+            "scaling_groups" : self.scaling_groups,
+            "scalers" : self.scalers
         }
 
         with open(file_name, 'wb') as out_file:
             pickle.dump(data_struct, out_file, pickle.HIGHEST_PROTOCOL)
 
+    ##
+    #   Imports the internal state information from an export file.
+    #   Allows one to import a trained model without requiring training.
+    #
+    #   @param file_name The name of the import file.
+    #
     def import_data(self, file_name):
-        """Imports previously exported data.
-        """
         print("Importing data from: " + str(file_name))
 
         with open(file_name, 'rb') as in_file:
             data_struct = pickle.load(in_file)
 
-        self.num_dof = data_struct["num_dof"]
-        self.dof_names = data_struct["dof_names"]
-        self.basis_degree = data_struct["basis_degree"]
-        self.basis_weights = data_struct["basis_weights"]
+        self.basis_weights = np.array(data_struct["basis_weights"])
 
-        self.basis_model = basis_model.GaussianBasisModel(self.basis_degree)
+        try:
+            self.scaling_groups = data_struct["scaling_groups"]
+            self.scalers = data_struct["scalers"]
+        except KeyError:
+            print("No scalers found during import!")
 
+    ##
+    #   Internal method which initializes data scalers.
+    #
+    def init_scalers(self):
+        if(self.scaling_groups is not None):
+            for group in self.scaling_groups:
+                self.scalers.append(sklearn.preprocessing.MinMaxScaler())
+
+    ##
+    #   Iteratively fits data scalers.
+    #   This must be called on all training demonstrations before fitting, if scaling is used.
+    #
+    #   @param trajectory Matrix of dimension D x T containing a demonstration, where T is the number of timesteps and D is the dimension of the measurement space.
+    #
+    def compute_standardization(self, trajectory):
+        if(len(self.scalers) > 0):
+            # N x M matrix, N is degrees of freedom, M is number of time steps
+            if(type(trajectory) != np.ndarray):
+                raise TypeError("Trajectory must be a numpy array.")
+
+            if(len(trajectory) != self.basis_model.num_observed_dof):
+                raise ValueError("Trajectory contains an invalid number of degrees of freedom.")
+
+            if(self.scaling_groups is not None):
+                for group, scaler in zip(self.scaling_groups, self.scalers):
+                    scaler.partial_fit(trajectory[group, :].reshape(-1, 1))
+        else:
+            print("Skipping basis standardization...")
+
+    ##
+    #   Iteratively adds a demonstration to the model.
+    #   The demonstration is decomposed into the latent space and the weights are stored internally.
+    #
+    #   @param trajectory Matrix of dimension D x T containing a demonstration, where T is the number of timesteps and D is the dimension of the measurement space.
+    #
     def add_demonstration(self, trajectory):
-        """Adds a demonstration to the BIP instance.
-        """
         # N x M matrix, N is degrees of freedom, M is number of time steps
         if(type(trajectory) != np.ndarray):
             raise TypeError("Trajectory must be a numpy array.")
 
-        if(len(trajectory) != self.num_dof):
+        if(len(trajectory) != self.basis_model.num_observed_dof):
+            raise ValueError("Trajectory contains an invalid number of degrees of freedom. Got " + str(len(trajectory)) + " but expected " + str(self.basis_model.num_observed_dof))
+
+        demonstration_weights = self.basis_transform(trajectory)
+
+        if(self.basis_weights.shape[0] == 0):
+            self.basis_weights = np.hstack([self.basis_weights, demonstration_weights])
+        else:
+            self.basis_weights = np.vstack([self.basis_weights, demonstration_weights])
+
+    ##
+    #   Gets the mean trajectory of all trained demonstrations.
+    #
+    #   @param num_samples The length of the generated mean trajectory
+    #
+    #   @return mean_trajectory Matrix of dimension D x num_samples containing the mean trajectory.
+    #
+    def get_mean_trajectory(self, num_samples = intprim.constants.DEFAULT_NUM_SAMPLES):
+        mean, var = self.get_basis_weight_parameters()
+
+        domain = np.linspace(0, 1, num_samples, dtype = intprim.constants.DTYPE)
+
+        return self.basis_inverse_transform(domain, mean)
+
+    ##
+    #   Gets the approximated trajectory for the given demonstration.
+    #   This is obtained by transforming the demonstration to the latent space and then projecting it back to measurement space.
+    #
+    #   @param trajectory Matrix of dimension D x T containing a demonstration, where T is the number of timesteps and D is the dimension of the measurement space.
+    #   @param num_samples The length of the generated approximate trajectory
+    #
+    #   @return approximate_trajectory Matrix of dimension D x num_samples containing the approximate trajectory.
+    #
+    def get_approximate_trajectory(self, trajectory, num_samples = intprim.constants.DEFAULT_NUM_SAMPLES, deriv = False):
+        # N x M matrix, N is degrees of freedom, M is number of time steps
+        if(type(trajectory) != np.ndarray):
+            raise TypeError("Trajectory must be a numpy array.")
+
+        if(len(trajectory) != self.basis_model.num_observed_dof):
             raise ValueError("Trajectory contains an invalid number of degrees of freedom.")
 
-        self.basis_weights.append(self.get_basis_weights_linear(trajectory))
+        basis_weights = self.basis_transform(trajectory)
 
-    def get_mean_trajectory(self, num_samples = DEFAULT_NUM_SAMPLES):
-        """Gets the mean trajectory from the stored demonstrations.
-        """
-        mean, var = self.get_basis_weight_parameters()
-        new_trajectory = np.zeros((self.num_dof, num_samples))
+        domain = np.linspace(0, 1, num_samples, dtype = intprim.constants.DTYPE)
 
-        domain = np.linspace(0, 1, num_samples, dtype = DTYPE)
+        return self.basis_inverse_transform(domain, basis_weights, deriv)
+
+    ##
+    #   Gets the approximated trajectory derivative for the given demonstration.
+    #   This is obtained by transforming the demonstration to a latent space composed of the basis function derivatives and then projecting it back to measurement space.
+    #
+    #   @param trajectory Matrix of dimension D x T containing a demonstration, where T is the number of timesteps and D is the dimension of the measurement space.
+    #   @param num_samples The length of the generated approximate trajectory
+    #
+    #   @return approximate_trajectory Matrix of dimension D x num_samples containing the approximate trajectory.
+    #
+    def get_approximate_trajectory_derivative(self, trajectory, num_samples = intprim.constants.DEFAULT_NUM_SAMPLES):
+        return get_approximate_trajectory(trajectory, num_samples, deriv = True)
+
+    ##
+    #   Gets the probability distribution of the trained demonstrations.
+    #
+    #   @param trajectory Matrix of dimension D x T containing a demonstration, where T is the number of timesteps and D is the dimension of the measurement space.
+    #   @param num_samples The length of the generated distribution.
+    #
+    #   @return mean Matrix of dimension D x num_samples containing the mean of the distribution for every degree of freedom.
+    #   @return upper_bound Matrix of dimension D x num_samples containing the mean + std of the distribution for every degree of freedom.
+    #   @return lower_bound Matrix of dimension D x num_samples containing the mean - std of the distribution for every degree of freedom.
+    #
+    def get_probability_distribution(self, num_samples = intprim.constants.DEFAULT_NUM_SAMPLES):
+        trajectory = np.zeros((self.basis_model.num_observed_dof, num_samples))
+        upper_bound = np.zeros((self.basis_model.num_observed_dof, num_samples))
+        lower_bound = np.zeros((self.basis_model.num_observed_dof, num_samples))
+
+        domain = np.linspace(0, 1, num_samples, dtype = intprim.constants.DTYPE)
         for idx in range(num_samples):
-            basis_matrix = self.get_block_diagonal_basis_matrix(domain[idx : idx + 1])
+            # In rare instances, projecting the covariance matrix can produce negative variance values in the diagonals of the projected matrix.
+            # Therefore, we instead project each demonstration and manually calculate the empirical mean/covariance.
+            projected_states = []
+            for dem_idx in range(self.basis_weights.shape[0]):
+                projected_states.append(self.basis_model.apply_coefficients(domain[idx], self.basis_weights[dem_idx, :]))
+            projected_states = np.array(projected_states)
 
-            dist_mean = np.dot(basis_matrix.T, mean).flatten()
+            dist_mean = np.mean(projected_states, axis = 0)
+            dist_var = np.cov(projected_states.T)
 
-            new_trajectory[:, idx] = dist_mean
+            if(self.scaling_groups is not None):
+                var_scale = np.ones(dist_mean.shape)
+                for group, scaler in zip(self.scaling_groups, self.scalers):
+                    var_scale[group] = 1.0 / scaler.scale_
+                    dist_mean[group] = scaler.inverse_transform(dist_mean[group].reshape(-1, 1)).flatten()
 
-        return new_trajectory
-
-    def get_approximate_trajectory(self, num_samples = DEFAULT_NUM_SAMPLES):
-        """Gets the approximate trajectory for the last added demonstration.
-        """
-        trajectory = []
-        domain = np.linspace(0, 1, num_samples, dtype = DTYPE)
-
-        for idx in range(num_samples):
-            basis_matrix = self.get_block_diagonal_basis_matrix(domain[idx : idx + 1])
-            state = np.dot(basis_matrix.T, self.basis_weights[-1].flatten())
-
-            for index in range(0, self.num_dof):
-                if(len(trajectory) <= index):
-                    trajectory.append([])
-
-                trajectory[index].append(state[index])
-
-        return np.array(trajectory)
-
-    def get_approximate_trajectory_derivative(self, num_samples = DEFAULT_NUM_SAMPLES):
-        """Gets the trajectory for the derivative of the last added demonstration.
-        """
-        trajectory = []
-
-        domain = np.linspace(0, 1, num_samples, dtype = DTYPE)
-
-        for idx in range(num_samples):
-            basis_matrix = self.get_block_diagonal_basis_matrix_derivative(domain[idx : idx + 1])
-            state = np.dot(basis_matrix.T, self.basis_weights[-1].flatten())
-
-            for index in range(0, self.num_dof):
-                if(len(trajectory) <= index):
-                    trajectory.append([])
-
-                trajectory[index].append(state[index])
-
-        return trajectory
-
-    def get_probability_distribution(self, num_samples = 100):
-        """Gets the probability distribution for the currently added demonstrations.
-        """
-        mean, var = self.get_basis_weight_parameters()
-        trajectory = np.zeros((self.num_dof, num_samples))
-        upper_bound = np.zeros((self.num_dof, num_samples))
-        lower_bound = np.zeros((self.num_dof, num_samples))
-
-        domain = np.linspace(0, 1, num_samples, dtype = DTYPE)
-        for idx in range(num_samples):
-            basis_matrix = self.get_block_diagonal_basis_matrix(domain[idx : idx + 1])
-
-            dist_mean = np.dot(basis_matrix.T, mean).flatten()
-            dist_var = np.dot(np.dot(basis_matrix.T, var), basis_matrix)
+                var_scale = np.diag(var_scale)
+                dist_var = np.dot(var_scale, dist_var).dot(var_scale.T)
 
             trajectory[:, idx] = dist_mean
 
-            for dof_index in range(0, self.num_dof):
+            for dof_index in range(0, self.basis_model.num_observed_dof):
                 std_dev = dist_var[dof_index][dof_index] ** 0.5
 
                 upper_bound[dof_index, idx] = dist_mean[dof_index] + std_dev
@@ -228,148 +213,110 @@ class BayesianInteractionPrimitive(object):
 
         return trajectory, upper_bound, lower_bound
 
-    def get_basis_weights_linear(self, trajectory):
-        """Computes weights for a linear basis model.
-        """
-        domain = np.linspace(0, 1, len(trajectory[0]), dtype = DTYPE)
-        return self.basis_model.fit_basis_functions_linear_closed_form(domain, trajectory.T).T
+    ##
+    #   Transforms the given trajectory from measurement space into the latent basis space.
+    #
+    #   @param trajectory Matrix of dimension D x T containing a demonstration, where T is the number of timesteps and D is the dimension of the measurement space.
+    #
+    #   @return transformed_state Vector of dimension B containing the transformed trajectory.
+    #
+    def basis_transform(self, trajectory):
+        if(self.scaling_groups is not None):
+            scaled_trajectory = np.zeros(trajectory.shape)
 
+            for group, scaler in zip(self.scaling_groups, self.scalers):
+                scaled_trajectory[group, :] = scaler.transform(trajectory[group, :].reshape(-1, 1)).reshape(trajectory[group, :].shape)
+
+            trajectory = scaled_trajectory
+
+        domain = np.linspace(0, 1, len(trajectory[0]), dtype = intprim.constants.DTYPE)
+        return self.basis_model.fit_basis_functions_linear_closed_form(domain, trajectory.T)
+
+    ##
+    #   Transforms the given basis space weights to measurement space for the given phase values.
+    #
+    #   @param x Vector of dimension T containing the phase values that the basis space weights should be projected at.
+    #   @param weights Vector of dimension B containing the basis space weights.
+    #   @param deriv True if the basis weights should be transformed with basis function derivatives, False for normal basis functions.
+    #
+    #   @return transformed_trajectory Matrix of dimension D x T containing the transformed trajectory.
+    #
+    def basis_inverse_transform(self, x, weights, deriv = False):
+        trajectory = np.zeros((self.basis_model.num_observed_dof, x.shape[0]), dtype = intprim.constants.DTYPE)
+
+        for idx in range(x.shape[0]):
+            trajectory[:, idx] = self.basis_model.apply_coefficients(x[idx], weights, deriv)
+
+        if(self.scaling_groups is not None):
+            for group, scaler in zip(self.scaling_groups, self.scalers):
+                trajectory[group, :] = scaler.inverse_transform(trajectory[group, :].reshape(-1, 1)).reshape(trajectory[group, :].shape)
+
+        return trajectory
+
+    ##
+    #   Gets the mean and covariance for the trained demonstrations.
+    #
+    #   @return mean Vector of dimension B containing the sample mean of the trained basis weights.
+    #   @return var Matrix of dimension B x B containing the sample covariance of the trained basis weights.
+    #
     def get_basis_weight_parameters(self):
-        """Computes metrics for the stored demonstrations.
-        """
-        weights = np.array(self.basis_weights, dtype = DTYPE).reshape((len(self.basis_weights), self.num_dof * self.basis_degree))
-        mean = np.mean(weights, axis = 0)
+        mean = np.mean(self.basis_weights, axis = 0)
 
-        if(len(self.basis_weights) > 1):
-            # np cov expects each row to represent a variable, and each column to represent an observation. So need to flip matrix.
-            var = np.cov(weights.T)
+        if(self.basis_weights.shape[0] > 1):
+            var = np.cov(self.basis_weights, rowvar = False)
         else:
             var = None
 
         return mean, var
 
-    def get_block_diagonal_basis_matrix(self, time):
-        """Gets the block diagonal basis matrix.
-        """
-        return self.basis_model.get_block_diagonal_basis_matrix(time, self.num_dof)
+    ##
+    #   Performs inference over the given trajectory and returns the most probable future trajectory.
+    #   This is a recursive call and the internal state of the currently set filter will be updated, so only new observations should be passed to this method each time it is called.
+    #
+    #   @param trajectory Matrix of dimension D x T containing a demonstration, where T is the number of timesteps and D is the dimension of the measurement space.
+    #   @param observation_noise Matrix of dimension D x D containing the observation noise.
+    #   @param active_dofs Vector of dimension \f$ D_o \f$ containing measurement space indices of the observed degrees of freedom. Note that the measurements will also contain unobserved degrees of freedom, but their values should not be used for inference.
+    #   @param num_samples The length of the generated trajectory. If set to 1, only a single value at the current or specified phase (see starting_phase) is generated.
+    #   @param starting_phase The phase value to start generating the trajectory from. If none, will start generating from the currently estimated phase value.
+    #   @param return_variance True if the phase system mean and variance should be returned. False otherwise.
+    #   @param phase_lookahead If phase_lookahead is none, this is an offset that will be applied to the currently estimated phase used to generate the trajectory.
+    #
+    #   @return new_trajectory Matrix of dimension D x num_samples containing the inferred trajectory.
+    #   @return phase Scalar value containing the inferred phase.
+    #   @return mean Vector of dimension B (or N+1+B if return_variance is True) containing the mean of the inferred state.
+    #   @return var Matrix of dimension B x B (or N+1+B x N+1+B if return_variance is True) containing the covariance of the inferred state.
+    #
+    def generate_probable_trajectory_recursive(self, trajectory, observation_noise, active_dofs, num_samples = intprim.constants.DEFAULT_NUM_SAMPLES, starting_phase = None, return_variance = False, phase_lookahead = 0.0):
+        if(self.scaling_groups is not None):
+            scaled_trajectory = np.zeros(trajectory.shape)
 
-    def get_block_diagonal_basis_matrix_derivative(self, time):
-        """Gets the derivative of the block diagonal basis matrix.
-        """
-        return self.basis_model.get_block_diagonal_basis_matrix_derivative(time, self.num_dof)
+            for group, scaler in zip(self.scaling_groups, self.scalers):
+                scaled_trajectory[group, :] = scaler.transform(trajectory[group, :].reshape(-1, 1)).reshape(trajectory[group, :].shape)
 
-    def initialize_filter(self, phase_velocity = 0.01, phase_var = 0.000001):
-        """Initializes the EKF SLAM filter.
-        """
-        mean, cov = self.get_basis_weight_parameters()
-        self.filter = EKFSLAM(mean, cov, self.basis_model, self.num_dof, phase_velocity, phase_var)
+            trajectory = scaled_trajectory
 
-    def generate_probable_trajectory_recursive(self, trajectory, observation_noise, num_samples = 100):
-        """Updates the filter estimate given a partial observation.
-        """
-        if(self.filter is None):
-            self.initialize_filter()
+        phase, mean, var = self.filter.localize(trajectory.T, observation_noise, active_dofs, return_phase_variance = return_variance)
 
-        phase, mean = self.filter.localize(trajectory.T, observation_noise)
-
-        new_trajectory = np.zeros((self.num_dof, num_samples), dtype = DTYPE)
+        target_phase = starting_phase
+        if(starting_phase is None):
+            target_phase = phase + phase_lookahead
+            if(target_phase > 1.0):
+                target_phase = 1.0
+            if(target_phase < 0.0):
+                target_phase = 0.0
 
         # Create a sequence from the stored basis weights.
-        domain = np.linspace(phase, 1, num_samples, dtype = DTYPE)
+        domain = np.linspace(target_phase, 1.0, num_samples, dtype = intprim.constants.DTYPE)
 
-        for idx in range(num_samples):
-            basis_matrix = self.get_block_diagonal_basis_matrix(domain[idx : idx + 1])
+        new_trajectory = self.basis_inverse_transform(domain, mean)
 
-            dist_mean = np.dot(basis_matrix.T, mean).flatten()
+        return new_trajectory, phase, mean, var
 
-            new_trajectory[:, idx] = dist_mean
-
-        return new_trajectory, phase
-
-    # Displays the probability that the current trajectory matches the stored trajectores at every instant in time.
-    def plot_distribution(self, mean, upper_bound, lower_bound):
-        """Plots a given probability distribution.
-        """
-        fig = plt.figure()
-        for index in range(mean.shape[0]):
-            new_plot = plt.subplot(mean.shape[0], 1, index + 1)
-            domain = np.linspace(0, 1, mean.shape[1])
-
-            new_plot.fill_between(domain, upper_bound[index], lower_bound[index], color = '#ccf5ff')
-            new_plot.plot(domain, mean[index], color = '#000000')
-            new_plot.set_title('Trajectory distribution for degree ' + self.dof_names[index])
-
-        plt.show(block = False)
-
-    def plot_trajectory(self, trajectory, observed_trajectory, mean_trajectory = None):
-        """Plots a given trajectory.
-        """
-        fig = plt.figure()
-
-        plt.plot(trajectory[0], trajectory[1])
-        plt.plot(observed_trajectory[0], observed_trajectory[1])
-        if(mean_trajectory is not None):
-            plt.plot(mean_trajectory[0], mean_trajectory[1])
-
-        fig.suptitle('Probable trajectory')
-
-        fig = plt.figure()
-        for index, degree in enumerate(trajectory):
-            new_plot = plt.subplot(len(trajectory), 1, index + 1)
-
-            domain = np.linspace(0, 1, len(trajectory[index]))
-            new_plot.plot(domain, trajectory[index], label = "Generated")
-
-            domain = np.linspace(0, 1, len(observed_trajectory[index]))
-            new_plot.plot(domain, observed_trajectory[index], label = "Observed")
-
-            if(mean_trajectory is not None):
-                domain = np.linspace(0, 1, len(mean_trajectory[index]))
-                new_plot.plot(domain, mean_trajectory[index], label = "Mean")
-
-            new_plot.set_title('Trajectory for degree ' + self.dof_names[index])
-            new_plot.legend()
-
-        plt.show()
-
-    def plot_partial_trajectory(self, trajectory, partial_observed_trajectory, mean_trajectory = None):
-        """Plots a trajectory and a partially observed trajectory.
-        """
-        fig = plt.figure()
-
-        start_partial = 0.0
-        end_partial = float(partial_observed_trajectory.shape[1]) / (float(partial_observed_trajectory.shape[1]) + float(trajectory.shape[1]))
-
-        plt.plot(trajectory[0], trajectory[1], "--", color = "#ff6a6a", label = "Generated", linewidth = 2.0)
-        plt.plot(partial_observed_trajectory[0], partial_observed_trajectory[1], color = "#6ba3ff", label = "Observed", linewidth = 2.0)
-        if(mean_trajectory is not None):
-            plt.plot(mean_trajectory[0], mean_trajectory[1], color = "#85d87f", label = "Mean")
-
-        fig.suptitle('Probable trajectory')
-        plt.legend()
-
-        plt.show()
-
-    def plot_approximation(self, trajectory, approx_trajectory, approx_trajectory_deriv):
-        """Plots a trajectory and its approximation.
-        """
-        domain = np.linspace(0, 1, len(trajectory[0]))
-        approx_domain = np.linspace(0, 1, len(approx_trajectory[0]))
-
-        for dof in range(self.num_dof):
-            plt.figure()
-            new_plot = plt.subplot(3, 1, 1)
-            new_plot.plot(domain, trajectory[dof])
-            new_plot.set_title('Original ' + self.dof_names[dof] + ' Data')
-
-            new_plot = plt.subplot(3, 1, 2)
-            # The trailing [0] is the dimension of the the state. In this case only plot position.
-            new_plot.plot(approx_domain, approx_trajectory[dof])
-            new_plot.set_title('Approximated ' + self.dof_names[dof] + ' Data')
-
-            new_plot = plt.subplot(3, 1, 3)
-            # The trailing [0] is the dimension of the the state. In this case only plot position.
-            new_plot.plot(approx_domain, approx_trajectory_deriv[dof])
-            new_plot.set_title('Approximated ' + self.dof_names[dof] + ' Derivative')
-
-        plt.show()
+    ##
+    #   Sets the given filter as the current filter.
+    #   This is used to initialize and reset the filter between interactions.
+    #
+    #   @param filter The filter to set.
+    #
+    def set_filter(self, filter):
+        self.filter = filter
