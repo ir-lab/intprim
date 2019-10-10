@@ -34,7 +34,7 @@ A set of tutorials and documentation about IntPrim has been provided in the foll
 
 Additionally, the API and associated documentation can be found here:
 
-https://joe-campbell.github.io/intprim_dev/
+https://ir-lab.github.io/intprim/
 
 ## Prerequisites
 

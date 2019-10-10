@@ -108,7 +108,8 @@ Inheritance diagram for intprim.filter.kf.KalmanFilter:</div>
  <div class="center">
   <img src="classintprim_1_1filter_1_1kf_1_1KalmanFilter.png" usemap="#intprim.filter.kf.KalmanFilter_map" alt=""/>
   <map id="intprim.filter.kf.KalmanFilter_map" name="intprim.filter.kf.KalmanFilter_map">
-<area href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html" title="The LinearSystem class provides general methods which are required by the KF linear filter..." alt="intprim.filter.linear_system.LinearSystem" shape="rect" coords="0,56,239,80"/>
+<area href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html" title="The LinearSystem class provides general methods which are required by the KF linear filter..." alt="intprim.filter.linear_system.LinearSystem" shape="rect" coords="124,56,363,80"/>
+<area href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html" title="The LinearSystem class provides general methods which are required by the KF linear filter..." alt="intprim.filter.linear_system.LinearSystem" shape="rect" coords="622,56,861,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -123,7 +124,28 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6311431ba3d5359261f70ed022d761ec"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1kf_1_1KalmanFilter.html#a6311431ba3d5359261f70ed022d761ec">localize</a> (self, measurement, measurement_noise, active_dofs, return_phase_variance=False)</td></tr>
 <tr class="memdesc:a6311431ba3d5359261f70ed022d761ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method performs localization of space (basis weights).  <a href="#a6311431ba3d5359261f70ed022d761ec">More...</a><br /></td></tr>
 <tr class="separator:a6311431ba3d5359261f70ed022d761ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39c8dc890d239658cdec5a7bdf16cb60"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1kf_1_1KalmanFilter.html#a39c8dc890d239658cdec5a7bdf16cb60">__init__</a> (self, basis_model, mean_basis_weights, cov_basis_weights, align_func=align.dtw.fastdtw, iterative_alignment=False, num_align_samples=100, cyclical=False)</td></tr>
+<tr class="memdesc:a39c8dc890d239658cdec5a7bdf16cb60"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialization method for the ExtendedKalmanFilter.  <a href="#a39c8dc890d239658cdec5a7bdf16cb60">More...</a><br /></td></tr>
+<tr class="separator:a39c8dc890d239658cdec5a7bdf16cb60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c3f337fe61a0ea424d55a2be0eb7b8c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1kf_1_1KalmanFilter.html#a0c3f337fe61a0ea424d55a2be0eb7b8c">align_observations</a> (self, observed_trajectory, active_dofs)</td></tr>
+<tr class="memdesc:a0c3f337fe61a0ea424d55a2be0eb7b8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform time alignment on the given observations.  <a href="#a0c3f337fe61a0ea424d55a2be0eb7b8c">More...</a><br /></td></tr>
+<tr class="separator:a0c3f337fe61a0ea424d55a2be0eb7b8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6311431ba3d5359261f70ed022d761ec"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1kf_1_1KalmanFilter.html#a6311431ba3d5359261f70ed022d761ec">localize</a> (self, measurement, measurement_noise, active_dofs, return_phase_variance=False)</td></tr>
+<tr class="memdesc:a6311431ba3d5359261f70ed022d761ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method performs localization of space (basis weights).  <a href="#a6311431ba3d5359261f70ed022d761ec">More...</a><br /></td></tr>
+<tr class="separator:a6311431ba3d5359261f70ed022d761ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html">intprim.filter.linear_system.LinearSystem</a></td></tr>
+<tr class="memitem:a5bf590c4f8127df7dff75f2dd75281c7 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#a5bf590c4f8127df7dff75f2dd75281c7">__init__</a> (self, basis_model)</td></tr>
+<tr class="memdesc:a5bf590c4f8127df7dff75f2dd75281c7 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization method for <a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html" title="The LinearSystem class provides general methods which are required by the KF linear filter...">LinearSystem</a>.  <a href="#a5bf590c4f8127df7dff75f2dd75281c7">More...</a><br /></td></tr>
+<tr class="separator:a5bf590c4f8127df7dff75f2dd75281c7 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae12a1020831b9df38fff245ebff08854 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#ae12a1020831b9df38fff245ebff08854">get_transition_model</a> (self)</td></tr>
+<tr class="memdesc:ae12a1020831b9df38fff245ebff08854 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the transition model for spatial filtering.  <a href="#ae12a1020831b9df38fff245ebff08854">More...</a><br /></td></tr>
+<tr class="separator:ae12a1020831b9df38fff245ebff08854 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a632cbfa7d48f372f6f3ecaecdb7ef79b inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#a632cbfa7d48f372f6f3ecaecdb7ef79b">get_process_noise</a> (self)</td></tr>
+<tr class="memdesc:a632cbfa7d48f372f6f3ecaecdb7ef79b inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the process noise for spatial filtering.  <a href="#a632cbfa7d48f372f6f3ecaecdb7ef79b">More...</a><br /></td></tr>
+<tr class="separator:a632cbfa7d48f372f6f3ecaecdb7ef79b inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4aa67eaf1469f2607d31b60bb29fe50 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#ab4aa67eaf1469f2607d31b60bb29fe50">get_measurement_model</a> (self, x)</td></tr>
+<tr class="memdesc:ab4aa67eaf1469f2607d31b60bb29fe50 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the measurement model for spatial filtering.  <a href="#ab4aa67eaf1469f2607d31b60bb29fe50">More...</a><br /></td></tr>
+<tr class="separator:ab4aa67eaf1469f2607d31b60bb29fe50 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bf590c4f8127df7dff75f2dd75281c7 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#a5bf590c4f8127df7dff75f2dd75281c7">__init__</a> (self, basis_model)</td></tr>
 <tr class="memdesc:a5bf590c4f8127df7dff75f2dd75281c7 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization method for <a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html" title="The LinearSystem class provides general methods which are required by the KF linear filter...">LinearSystem</a>.  <a href="#a5bf590c4f8127df7dff75f2dd75281c7">More...</a><br /></td></tr>
 <tr class="separator:a5bf590c4f8127df7dff75f2dd75281c7 inherit pub_methods_classintprim_1_1filter_1_1linear__system_1_1LinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -271,7 +293,127 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a39c8dc890d239658cdec5a7bdf16cb60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.kf.KalmanFilter.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>basis_model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mean_basis_weights</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cov_basis_weights</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>align_func</em> = <code>align.dtw.fastdtw</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>iterative_alignment</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>num_align_samples</em> = <code>100</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cyclical</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The initialization method for the ExtendedKalmanFilter. </p>
+<p>Responsible for initializing the state.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">basis_model</td><td>The basis model corresponding to this state space. </td></tr>
+    <tr><td class="paramname">mean_basis_weights</td><td>Vector of dimension D containing the initial state for the basis weights. </td></tr>
+    <tr><td class="paramname">cov_basis_weights</td><td>Matrix of dimension D x D containing the initial covariance matrix for the basis weights. </td></tr>
+    <tr><td class="paramname">align_func</td><td>The time alignment algorithm to use. </td></tr>
+    <tr><td class="paramname">iterative_alignment</td><td>True to start alignment from the currently estimated phase, False to perform alignment over the entire trajectory every time. </td></tr>
+    <tr><td class="paramname">num_align_samples</td><td>The number of samples to use when aligning trajectories. </td></tr>
+    <tr><td class="paramname">cyclical</td><td>Indicates whether this is a cyclical primitive. If True, the internal phase state will cycle back to 0 once it exceeds 1, allowing for continuous inference of periodic interactions. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a0c3f337fe61a0ea424d55a2be0eb7b8c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.kf.KalmanFilter.align_observations </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>observed_trajectory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>active_dofs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform time alignment on the given observations. </p>
+<p>This will call the given time alignment function and attempt to temporally align the observations to the trajectory given by the currently estimated state. If the iterative_alignment flag is True, then time alignment will only be performed from the currently estimated phase to the end of the trajectory. While this is more computationally efficient, it causes errors to be accumulated and thus is not always a good choice. If the iterative_alignment flag is False, then time alignment will always occur from 0 phase. By default, the flag is False.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">observed_trajectory</td><td>Matrix of dimension T x D containing observations, where T is the number of timesteps that have been observed since the last call to <a class="el" href="classintprim_1_1filter_1_1kf_1_1KalmanFilter.html#a6311431ba3d5359261f70ed022d761ec" title="This method performs localization of space (basis weights). ">localize()</a> and D is the dimension of the measurement space. </td></tr>
+    <tr><td class="paramname">active_dofs</td><td>Vector of dimension \( D_o \) containing measurement space indices of the observed degrees of freedom. Note that the measurements will also contain unobserved degrees of freedom, but their values should not be used for inference.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Scalar value containing the estimated phase. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a0c3f337fe61a0ea424d55a2be0eb7b8c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -374,8 +516,67 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a6311431ba3d5359261f70ed022d761ec"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.kf.KalmanFilter.localize </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>measurement</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>measurement_noise</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>active_dofs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>return_phase_variance</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method performs localization of space (basis weights). </p>
+<p>This is a recursive call, which means it updates the internal state estimate based on the given observations. For each observation given, two steps are performed recursively: First, the current state is propagated forward in time in what is known as the prediction step. $$ \begin{align} \boldsymbol{\mu}_{t|t-1} &amp;= \boldsymbol{G}$ \boldsymbol{\mu}_{t-1|t-1},\ % \boldsymbol{\Sigma}_{t|t-1} &amp;= \boldsymbol{G} \boldsymbol{\Sigma}_{t-1|t-1} \boldsymbol{G}^{T} + \boldsymbol{Q}_t, \end{align} $$ In practice, the prediction does nothing for spatial filters because basis weights are time invariant.</p>
+<p>Next, we integrate the observations into the current state in the update step. $$ \begin{align} \boldsymbol{K}_t &amp;= \boldsymbol{\Sigma}_{t|t-1} \boldsymbol{H}_t^{T} (\boldsymbol{H}_t \boldsymbol{\Sigma}_{t|t-1} \boldsymbol{H}_t^{T} + \boldsymbol{R}_t)^{-1},\ % \boldsymbol{\mu}_{t|t} &amp;= \boldsymbol{\mu}_{t|t-1} + \boldsymbol{K}_t(\boldsymbol{y}_t - h(\boldsymbol{\mu}_{t|t-1})),\ % \boldsymbol{\Sigma}_{t|t} &amp;= (I - \boldsymbol{K}_t \boldsymbol{H}_t)\boldsymbol{\Sigma}_{t|t-1}, \end{align} $$</p>
+<p>Lastly, the mean and covariance of the state are returned. At the end of both the prediction and update steps the internal phase value is clipped such that it falls within the range [0, 1].</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">measurement</td><td>Matrix of dimension T x D containing observations, where T is the number of timesteps that have been observed since the last call to <a class="el" href="classintprim_1_1filter_1_1kf_1_1KalmanFilter.html#a6311431ba3d5359261f70ed022d761ec" title="This method performs localization of space (basis weights). ">localize()</a> and D is the dimension of the measurement space. </td></tr>
+    <tr><td class="paramname">measurement_noise</td><td>Matrix of dimension D x D containing the measurement noise for the given set of measurements. </td></tr>
+    <tr><td class="paramname">active_dofs</td><td>Vector of dimension \( D_o \) containing measurement space indices of the observed degrees of freedom. Note that the measurements will also contain unobserved degrees of freedom, but their values should not be used for inference. </td></tr>
+    <tr><td class="paramname">return_phase_variance</td><td>This is not used for this filter but is maintained for API compatibility with the others.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Scalar value containing the inferred phase, Vector of dimension D containing inferred mean, Matrix of dimension D x D. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/joe/LibraryPythonPkg/intprim/intprim/filter/kf.py</li>
+<li>/home/joe/LibraryPythonPkg/intprim/build/lib.linux-x86_64-2.7/intprim/filter/kf.py</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

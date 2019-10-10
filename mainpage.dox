@@ -1,0 +1,8 @@
+/*!
+@mainpage IntPrim
+
+This is the API and code documentation for the IntPrim Python library.
+While Doxygen is an unusual choice for documenting Python code, it has been chosen to maintain consistency with intprim_framework_ros which utilizes both Python and C++.
+
+While the classes have not yet been organized into a package, they can be individually browsed under the Classes tab.
+*/

@@ -109,11 +109,24 @@ Inheritance diagram for intprim.filter.linear_system.LinearSystem:</div>
   <img src="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.png" usemap="#intprim.filter.linear_5Fsystem.LinearSystem_map" alt=""/>
   <map id="intprim.filter.linear_5Fsystem.LinearSystem_map" name="intprim.filter.linear_system.LinearSystem_map">
 <area href="classintprim_1_1filter_1_1kf_1_1KalmanFilter.html" title="The KalmanFilter class localizes an interaction in space via the extended Kalman filter. " alt="intprim.filter.kf.KalmanFilter" shape="rect" coords="0,112,239,136"/>
+<area href="classintprim_1_1filter_1_1kf_1_1KalmanFilter.html" title="The KalmanFilter class localizes an interaction in space via the extended Kalman filter. " alt="intprim.filter.kf.KalmanFilter" shape="rect" coords="249,112,488,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a5bf590c4f8127df7dff75f2dd75281c7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#a5bf590c4f8127df7dff75f2dd75281c7">__init__</a> (self, basis_model)</td></tr>
+<tr class="memdesc:a5bf590c4f8127df7dff75f2dd75281c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization method for <a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html" title="The LinearSystem class provides general methods which are required by the KF linear filter...">LinearSystem</a>.  <a href="#a5bf590c4f8127df7dff75f2dd75281c7">More...</a><br /></td></tr>
+<tr class="separator:a5bf590c4f8127df7dff75f2dd75281c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae12a1020831b9df38fff245ebff08854"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#ae12a1020831b9df38fff245ebff08854">get_transition_model</a> (self)</td></tr>
+<tr class="memdesc:ae12a1020831b9df38fff245ebff08854"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the transition model for spatial filtering.  <a href="#ae12a1020831b9df38fff245ebff08854">More...</a><br /></td></tr>
+<tr class="separator:ae12a1020831b9df38fff245ebff08854"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a632cbfa7d48f372f6f3ecaecdb7ef79b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#a632cbfa7d48f372f6f3ecaecdb7ef79b">get_process_noise</a> (self)</td></tr>
+<tr class="memdesc:a632cbfa7d48f372f6f3ecaecdb7ef79b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the process noise for spatial filtering.  <a href="#a632cbfa7d48f372f6f3ecaecdb7ef79b">More...</a><br /></td></tr>
+<tr class="separator:a632cbfa7d48f372f6f3ecaecdb7ef79b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4aa67eaf1469f2607d31b60bb29fe50"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#ab4aa67eaf1469f2607d31b60bb29fe50">get_measurement_model</a> (self, x)</td></tr>
+<tr class="memdesc:ab4aa67eaf1469f2607d31b60bb29fe50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the measurement model for spatial filtering.  <a href="#ab4aa67eaf1469f2607d31b60bb29fe50">More...</a><br /></td></tr>
+<tr class="separator:ab4aa67eaf1469f2607d31b60bb29fe50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bf590c4f8127df7dff75f2dd75281c7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html#a5bf590c4f8127df7dff75f2dd75281c7">__init__</a> (self, basis_model)</td></tr>
 <tr class="memdesc:a5bf590c4f8127df7dff75f2dd75281c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization method for <a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html" title="The LinearSystem class provides general methods which are required by the KF linear filter...">LinearSystem</a>.  <a href="#a5bf590c4f8127df7dff75f2dd75281c7">More...</a><br /></td></tr>
 <tr class="separator:a5bf590c4f8127df7dff75f2dd75281c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -187,7 +200,72 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5bf590c4f8127df7dff75f2dd75281c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.linear_system.LinearSystem.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>basis_model</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialization method for <a class="el" href="classintprim_1_1filter_1_1linear__system_1_1LinearSystem.html" title="The LinearSystem class provides general methods which are required by the KF linear filter...">LinearSystem</a>. </p>
+<p>Instantiates internal state matrices for computational efficiency.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">basis_model</td><td>The basis model corresponding to this state space. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ab4aa67eaf1469f2607d31b60bb29fe50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.linear_system.LinearSystem.get_measurement_model </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the measurement model for spatial filtering. </p>
+<p>This is the Jacobian associated with the partial differential of \( \boldsymbol{H}_t = \frac{\partial h(\boldsymbol{s}_t)}{\partial s_t} \). However, the partial derivative of a linear combination of basis weights and basis functions is simply the basis functions.</p>
+<dl class="section return"><dt>Returns</dt><dd>Matrix of dimension B x D containing the measurement model. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ab4aa67eaf1469f2607d31b60bb29fe50"></a>
 <div class="memitem">
 <div class="memproto">
@@ -238,6 +316,46 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a632cbfa7d48f372f6f3ecaecdb7ef79b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.linear_system.LinearSystem.get_process_noise </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the process noise for spatial filtering. </p>
+<p>Functionally this is just a zero matrix since basis weights are time invariant.</p>
+<dl class="section return"><dt>Returns</dt><dd>Matrix of dimension B x B containing the process noise. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae12a1020831b9df38fff245ebff08854"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.linear_system.LinearSystem.get_transition_model </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the transition model for spatial filtering. </p>
+<p>Functionally this is just an identity matrix since basis weights are time invariant.</p>
+<dl class="section return"><dt>Returns</dt><dd>Matrix of dimension B x B containing the transition model. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ae12a1020831b9df38fff245ebff08854"></a>
 <div class="memitem">
 <div class="memproto">
@@ -259,7 +377,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/joe/LibraryPythonPkg/intprim/intprim/filter/linear_system.py</li>
+<li>/home/joe/LibraryPythonPkg/intprim/build/lib.linux-x86_64-2.7/intprim/filter/linear_system.py</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

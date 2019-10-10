@@ -108,7 +108,8 @@ Inheritance diagram for intprim.filter.spatiotemporal.ekf.ExtendedKalmanFilter:<
  <div class="center">
   <img src="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.png" usemap="#intprim.filter.spatiotemporal.ekf.ExtendedKalmanFilter_map" alt=""/>
   <map id="intprim.filter.spatiotemporal.ekf.ExtendedKalmanFilter_map" name="intprim.filter.spatiotemporal.ekf.ExtendedKalmanFilter_map">
-<area href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html" title="The NonLinearSystem class provides general methods which are required by all the nonlinear filtering ..." alt="intprim.filter.spatiotemporal.nonlinear_system.NonLinearSystem" shape="rect" coords="0,56,368,80"/>
+<area href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html" title="The NonLinearSystem class provides general methods which are required by all the nonlinear filtering ..." alt="intprim.filter.spatiotemporal.nonlinear_system.NonLinearSystem" shape="rect" coords="189,56,557,80"/>
+<area href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html" title="The NonLinearSystem class provides general methods which are required by all the nonlinear filtering ..." alt="intprim.filter.spatiotemporal.nonlinear_system.NonLinearSystem" shape="rect" coords="945,56,1313,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -129,7 +130,37 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab002720aed6b117aa27afd1e5c48fae3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.html#ab002720aed6b117aa27afd1e5c48fae3">localize</a> (self, measurement, measurement_noise, active_dofs, return_phase_variance=False)</td></tr>
 <tr class="memdesc:ab002720aed6b117aa27afd1e5c48fae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method performs simultaneous localization of both time (phase) and space (basis weights).  <a href="#ab002720aed6b117aa27afd1e5c48fae3">More...</a><br /></td></tr>
 <tr class="separator:ab002720aed6b117aa27afd1e5c48fae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab59b4ed26a418d01e9b934f041e2cb35"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.html#ab59b4ed26a418d01e9b934f041e2cb35">__init__</a> (self, basis_model, initial_phase_mean, initial_phase_var, proc_var, mean_basis_weights, cov_basis_weights, time_delta=1.0, cyclical=False)</td></tr>
+<tr class="memdesc:ab59b4ed26a418d01e9b934f041e2cb35"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialization method for the <a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.html" title="The ExtendedKalmanFilter class localizes an interaction in time and space via the extended Kalman fil...">ExtendedKalmanFilter</a>.  <a href="#ab59b4ed26a418d01e9b934f041e2cb35">More...</a><br /></td></tr>
+<tr class="separator:ab59b4ed26a418d01e9b934f041e2cb35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af26937c0f32285ab91ac9ffbe036de7e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.html#af26937c0f32285ab91ac9ffbe036de7e">get_mean</a> (self)</td></tr>
+<tr class="memdesc:af26937c0f32285ab91ac9ffbe036de7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mean of the internal state.  <a href="#af26937c0f32285ab91ac9ffbe036de7e">More...</a><br /></td></tr>
+<tr class="separator:af26937c0f32285ab91ac9ffbe036de7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac55e1beb7b959c4a305b06204cd4b0f8"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.html#ac55e1beb7b959c4a305b06204cd4b0f8">get_covariance</a> (self)</td></tr>
+<tr class="memdesc:ac55e1beb7b959c4a305b06204cd4b0f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the covariance of the internal state.  <a href="#ac55e1beb7b959c4a305b06204cd4b0f8">More...</a><br /></td></tr>
+<tr class="separator:ac55e1beb7b959c4a305b06204cd4b0f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1e402d915b7bf5a97cf982829df8352"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.html#ab1e402d915b7bf5a97cf982829df8352">get_projected_mean_covariance</a> (self, phase, mean=None, cov=None)</td></tr>
+<tr class="memdesc:ab1e402d915b7bf5a97cf982829df8352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the projection of the internal mean and covariance to measurement space.  <a href="#ab1e402d915b7bf5a97cf982829df8352">More...</a><br /></td></tr>
+<tr class="separator:ab1e402d915b7bf5a97cf982829df8352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab002720aed6b117aa27afd1e5c48fae3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.html#ab002720aed6b117aa27afd1e5c48fae3">localize</a> (self, measurement, measurement_noise, active_dofs, return_phase_variance=False)</td></tr>
+<tr class="memdesc:ab002720aed6b117aa27afd1e5c48fae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method performs simultaneous localization of both time (phase) and space (basis weights).  <a href="#ab002720aed6b117aa27afd1e5c48fae3">More...</a><br /></td></tr>
+<tr class="separator:ab002720aed6b117aa27afd1e5c48fae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html">intprim.filter.spatiotemporal.nonlinear_system.NonLinearSystem</a></td></tr>
+<tr class="memitem:a49c2c9f9a7801e26625e29c0bc7ddade inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html#a49c2c9f9a7801e26625e29c0bc7ddade">__init__</a> (self, basis_model, proc_var, time_delta, system_order)</td></tr>
+<tr class="memdesc:a49c2c9f9a7801e26625e29c0bc7ddade inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization method for <a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html" title="The NonLinearSystem class provides general methods which are required by all the nonlinear filtering ...">NonLinearSystem</a>.  <a href="#a49c2c9f9a7801e26625e29c0bc7ddade">More...</a><br /></td></tr>
+<tr class="separator:a49c2c9f9a7801e26625e29c0bc7ddade inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1733f1ebfe4d35d9f6414d25bc5588f1 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html#a1733f1ebfe4d35d9f6414d25bc5588f1">get_transition_model</a> (self)</td></tr>
+<tr class="memdesc:a1733f1ebfe4d35d9f6414d25bc5588f1 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the transition model for spatiotemporal filtering.  <a href="#a1733f1ebfe4d35d9f6414d25bc5588f1">More...</a><br /></td></tr>
+<tr class="separator:a1733f1ebfe4d35d9f6414d25bc5588f1 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfac79d366b571dc07e8801e6ee162a0 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html#adfac79d366b571dc07e8801e6ee162a0">get_process_noise</a> (self)</td></tr>
+<tr class="memdesc:adfac79d366b571dc07e8801e6ee162a0 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the process noise for spatiotemporal filtering.  <a href="#adfac79d366b571dc07e8801e6ee162a0">More...</a><br /></td></tr>
+<tr class="separator:adfac79d366b571dc07e8801e6ee162a0 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa84399039f258adafaa0869565f81c6 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html#aaa84399039f258adafaa0869565f81c6">get_phase_process_noise</a> (self)</td></tr>
+<tr class="memdesc:aaa84399039f258adafaa0869565f81c6 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the process noise specifically for the constant velocity phase system.  <a href="#aaa84399039f258adafaa0869565f81c6">More...</a><br /></td></tr>
+<tr class="separator:aaa84399039f258adafaa0869565f81c6 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70fbf9ce2cc4e8bad3147ebe0051df37 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html#a70fbf9ce2cc4e8bad3147ebe0051df37">get_measurement_model</a> (self, x)</td></tr>
+<tr class="memdesc:a70fbf9ce2cc4e8bad3147ebe0051df37 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the measurement model for spatiotemporal filtering.  <a href="#a70fbf9ce2cc4e8bad3147ebe0051df37">More...</a><br /></td></tr>
+<tr class="separator:a70fbf9ce2cc4e8bad3147ebe0051df37 inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49c2c9f9a7801e26625e29c0bc7ddade inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html#a49c2c9f9a7801e26625e29c0bc7ddade">__init__</a> (self, basis_model, proc_var, time_delta, system_order)</td></tr>
 <tr class="memdesc:a49c2c9f9a7801e26625e29c0bc7ddade inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization method for <a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem.html" title="The NonLinearSystem class provides general methods which are required by all the nonlinear filtering ...">NonLinearSystem</a>.  <a href="#a49c2c9f9a7801e26625e29c0bc7ddade">More...</a><br /></td></tr>
 <tr class="separator:a49c2c9f9a7801e26625e29c0bc7ddade inherit pub_methods_classintprim_1_1filter_1_1spatiotemporal_1_1nonlinear__system_1_1NonLinearSystem"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -287,7 +318,110 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab59b4ed26a418d01e9b934f041e2cb35"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.spatiotemporal.ekf.ExtendedKalmanFilter.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>basis_model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>initial_phase_mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>initial_phase_var</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>proc_var</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mean_basis_weights</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cov_basis_weights</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>time_delta</em> = <code>1.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cyclical</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The initialization method for the <a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.html" title="The ExtendedKalmanFilter class localizes an interaction in time and space via the extended Kalman fil...">ExtendedKalmanFilter</a>. </p>
+<p>Responsible for initializing the state.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">basis_model</td><td>The basis model corresponding to this state space. </td></tr>
+    <tr><td class="paramname">initial_phase_mean</td><td>Vector of dimension N corresponding to the initial mean of the constant velocity phase system. If this is a 0th order system, should contain only [phase_mean]. If this is 1st order, should contain [phase_mean, phase_velocity]. If this is 2nd order, should contain [phase_mean, phase_velocity, phase_acceleration]. Anything above 2nd order is not supported. </td></tr>
+    <tr><td class="paramname">initial_phase_var</td><td>Vector of dimension N corresponding to the diagonal of the initial covariance of the constant velocity phase system. If this is a 0th order system, should contain only [phase_var]. If this is 1st order, should contain [phase_var, phase_velocity_var]. If this is 2nd order, should contain [phase_var, phase_velocity_var, phase_acceleration_var]. Anything above 2nd order is not supported. </td></tr>
+    <tr><td class="paramname">proc_var</td><td>The process noise of the constant velocity phase system. This is a scalar value corresponding to the variance of a piecewise white noise model. </td></tr>
+    <tr><td class="paramname">mean_basis_weights</td><td>Vector of dimension D containing the initial state for the basis weights. </td></tr>
+    <tr><td class="paramname">cov_basis_weights</td><td>Matrix of dimension D x D containing the initial covariance matrix for the basis weights. </td></tr>
+    <tr><td class="paramname">time_delta</td><td>The amount of time that elapses between time steps. This serves as a scaling factor to the constant velocity phase system. In most cases, this should be set to 1.0. </td></tr>
+    <tr><td class="paramname">cyclical</td><td>Indicates whether this is a cyclical primitive. If True, the internal phase state will cycle back to 0 once it exceeds 1, allowing for continuous inference of periodic interactions. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ac55e1beb7b959c4a305b06204cd4b0f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.spatiotemporal.ekf.ExtendedKalmanFilter.get_covariance </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the covariance of the internal state. </p>
+<dl class="section return"><dt>Returns</dt><dd>Matrix of dimension N+1+B x N+1+B. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ac55e1beb7b959c4a305b06204cd4b0f8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -323,6 +457,74 @@ Public Attributes</h2></td></tr>
 
 <p>Gets the mean of the internal state. </p>
 <dl class="section return"><dt>Returns</dt><dd>Vector of dimension N+1+B containing the state mean. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af26937c0f32285ab91ac9ffbe036de7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.spatiotemporal.ekf.ExtendedKalmanFilter.get_mean </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the mean of the internal state. </p>
+<dl class="section return"><dt>Returns</dt><dd>Vector of dimension N+1+B containing the state mean. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab1e402d915b7bf5a97cf982829df8352"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.spatiotemporal.ekf.ExtendedKalmanFilter.get_projected_mean_covariance </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>phase</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mean</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cov</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the projection of the internal mean and covariance to measurement space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">phase</td><td>The phase value \( \phi \) to use for the projection. </td></tr>
+    <tr><td class="paramname">mean</td><td>The mean from which to calculate the projected mean. If none, uses the internal state mean. </td></tr>
+    <tr><td class="paramname">cov</td><td>The covariance from which to calculate the projected covariance. If none, uses the interal state covariance.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of dimension D containing the sample mean, matrix of dimension D x D containing the sample covariance. </dd></dl>
 
 </div>
 </div>
@@ -434,8 +636,67 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab002720aed6b117aa27afd1e5c48fae3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def intprim.filter.spatiotemporal.ekf.ExtendedKalmanFilter.localize </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>measurement</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>measurement_noise</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>active_dofs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>return_phase_variance</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method performs simultaneous localization of both time (phase) and space (basis weights). </p>
+<p>This is a recursive call, which means it updates the internal state estimate based on the given observations. For each observation given, two steps are performed recursively: First, the current state is propagated forward in time in what is known as the prediction step. $$ \begin{align} \boldsymbol{\mu}_{t|t-1} &amp;= \boldsymbol{G}$ \boldsymbol{\mu}_{t-1|t-1},\ % \boldsymbol{\Sigma}_{t|t-1} &amp;= \boldsymbol{G} \boldsymbol{\Sigma}_{t-1|t-1} \boldsymbol{G}^{T} + \boldsymbol{Q}_t, \end{align} $$ Note that in this case, we only apply the dot product to the first N+1 dimensions of the state. This is for computational efficiency as only the constant velocity phase system has a non-zero transition.</p>
+<p>Next, we integrate the observations into the current state in the update step. $$ \begin{align} \boldsymbol{K}_t &amp;= \boldsymbol{\Sigma}_{t|t-1} \boldsymbol{H}_t^{T} (\boldsymbol{H}_t \boldsymbol{\Sigma}_{t|t-1} \boldsymbol{H}_t^{T} + \boldsymbol{R}_t)^{-1},\ % \boldsymbol{\mu}_{t|t} &amp;= \boldsymbol{\mu}_{t|t-1} + \boldsymbol{K}_t(\boldsymbol{y}_t - h(\boldsymbol{\mu}_{t|t-1})),\ % \boldsymbol{\Sigma}_{t|t} &amp;= (I - \boldsymbol{K}_t \boldsymbol{H}_t)\boldsymbol{\Sigma}_{t|t-1}, \end{align} $$</p>
+<p>Lastly, the mean and covariance of the state are returned. At the end of both the prediction and update steps the internal phase value is clipped such that it falls within the range [0, 1].</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">measurement</td><td>Matrix of dimension T x D containing observations, where T is the number of timesteps that have been observed since the last call to <a class="el" href="classintprim_1_1filter_1_1spatiotemporal_1_1ekf_1_1ExtendedKalmanFilter.html#ab002720aed6b117aa27afd1e5c48fae3" title="This method performs simultaneous localization of both time (phase) and space (basis weights)...">localize()</a> and D is the dimension of the measurement space. </td></tr>
+    <tr><td class="paramname">measurement_noise</td><td>Matrix of dimension D x D containing the measurement noise for the given set of measurements. </td></tr>
+    <tr><td class="paramname">active_dofs</td><td>Vector of dimension \( D_o \) containing measurement space indices of the observed degrees of freedom. Note that the measurements will also contain unobserved degrees of freedom, but their values should not be used for inference. </td></tr>
+    <tr><td class="paramname">return_phase_variance</td><td>True if the mean/variance for the phase system should be returned in addition to the basis weights.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Scalar value containing the inferred phase, Vector of dimension D (or N+1+D if return_phase_variance is True) containing inferred mean, Matrix of dimension D x D (or N+1+D x N+1+D if return_phase_variance is True). </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/joe/LibraryPythonPkg/intprim/intprim/filter/spatiotemporal/ekf.py</li>
+<li>/home/joe/LibraryPythonPkg/intprim/build/lib.linux-x86_64-2.7/intprim/filter/spatiotemporal/ekf.py</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
