@@ -2,12 +2,14 @@
 The IntPrim library is a Python implementation of Interaction Primitives from the Interactive Robotics Lab at Arizona State University.
 Interaction Primitives are a human-robot interaction (HRI) framework based on imitation learning.
 The objective of this framework is to extract the dynamics of an interaction from a set of example demonstrations, then use the dynamics to infer the future states of both the human and the robot.
-The primary purpose of this library is to enable training and inference using Bayesian Interaction Primitives, however, it also supports Probabilistic Movement Primitives and Particle Filters as a baseline for comparison.
+This library was primarily developed to enable training and inference with Bayesian Interaction Primitives, however, it also supports Probabilistic Movement Primitives and Particle Filters as a baseline for comparison.
 
 ![](docs/notebooks/media/examples_new.png?raw=true)
 
 This library has been successfully deployed in real-world HRI scenarios involving cooperative object manipulation, shaking hands, hugging, grasping, and more!
 A list of peer-reviewed publications that have utilized this library can be found below.
+
+A corresponding ROS package is available at https://github.com/ir-lab/intprim_framework_ros which greatly simplifies the process of setting up and running real experiments with the IntPrim library.
 
 ## Features
 
@@ -17,6 +19,7 @@ A list of peer-reviewed publications that have utilized this library can be foun
 * Automatic basis space selection with support for Gaussian, Sigmoidal, and Polynomial functions
 * Automatic computation of the observation noise
 * Comprehensive interactive analysis tools
+* Integration with ROS via https://github.com/ir-lab/intprim_framework_ros
 
 ![](docs/notebooks/media/analysis_example.gif?raw=true)
 
@@ -31,7 +34,7 @@ A set of tutorials and documentation about IntPrim has been provided in the foll
 
 Additionally, the API and associated documentation can be found here:
 
-https://ir-lab.github.io/intprim/
+https://joe-campbell.github.io/intprim_dev/
 
 ## Prerequisites
 
@@ -48,8 +51,6 @@ The following Python libraries must be installed before IntPrim can be used:
 To install this library, download the package and in the root directory run:
 
 python setup.py build_ext install --user
-
-This project is licensed under the MIT license, included in this directory.
 
 ## Feedback
 Questions or comments may be directed to Joseph Campbell at <jacampb1@asu.edu>, Simon Stepputtis at <sstepput@asu.edu>, or Heni Ben Amor <hbenamor@asu.edu>.
@@ -84,14 +85,16 @@ If you use this library, please cite one of the following papers:
 }
 ```
 
+This project is licensed under the MIT license, included in this directory.
+
 ## Used By
 
 This library has been developed by Joseph Campbell at Arizona State University and has been utilized in the following works:
 
-[1] J. Campbell, S. Stepputtis, and H. Ben Amor. Probabilistic Multimodal Modeling for Human-Robot Interaction Tasks. Robotics: Science and Systems (RSS) 2019.
+J. Campbell, S. Stepputtis, and H. Ben Amor. Probabilistic Multimodal Modeling for Human-Robot Interaction Tasks. Robotics: Science and Systems (RSS) 2019.
 
-[2] J. Campbell and H. Ben Amor. Bayesian Interaction Primitives: A SLAM Approach to Human-Robot Interaction. Conference on Robot Learning (CoRL) 2017.
+J. Campbell, A. Hitzmann, S. Stepputtis, S. Ikemoto, K. Hosoda, and H. Ben Amor. Learning Interactive Behaviors for Musculoskeletal Robots Using Bayesian Interaction Primitives. International Conference on Intelligent Robots and Systems (IROS) 2019.
 
-[3] J. Campbell, A. Hitzmann, S. Stepputtis, S. Ikemoto, K. Hosoda, and H. Ben Amor. Learning Interactive Behaviors for Musculoskeletal Robots Using Bayesian Interaction Primitives. International Conference on Intelligent Robots and Systems (IROS) 2019.
+K. Bagewadi, J. Campbell, and H. Ben Amor. Multimodal Dataset of Human-Robot Hugging Interaction. AAAI Fall Symposium on Artificial Intelligence for Human-Robot Interaction (AI-HRI), November 2019.
 
-[4] K. Bagewadi, J. Campbell, and H. Ben Amor. Multimodal Dataset of Human-Robot Hugging Interaction. AAAI Fall Symposium on Artificial Intelligence for Human-Robot Interaction (AI-HRI), November 2019.
+J. Campbell and H. Ben Amor. Bayesian Interaction Primitives: A SLAM Approach to Human-Robot Interaction. Conference on Robot Learning (CoRL) 2017.
