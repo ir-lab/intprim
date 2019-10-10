@@ -1,11 +1,15 @@
 import copy
 import intprim
-import IPython.display
 import matplotlib.pyplot as plt
 import matplotlib.animation
 import numpy as np
 import numpy.random
 import sklearn.metrics
+
+try:
+    import IPython.display
+except:
+    pass
 
 animation_plots = []
 
@@ -198,3 +202,4 @@ def evaluate_trajectories(primitive, filter, test_trajectories, observation_nois
         print("Mean DoF MSE: " + str(mean_mse / mse_count) + ". Phase MAE: " + str(phase_mae / mse_count))
 
         # animate_results(all_gen_trajectories, all_test_trajectories, mean_trajectory)
+
