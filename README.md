@@ -2,7 +2,7 @@
 The IntPrim library is a Python implementation of Interaction Primitives from the Interactive Robotics Lab at Arizona State University.
 Interaction Primitives are a human-robot interaction (HRI) framework based on imitation learning.
 The objective of this framework is to extract the dynamics of an interaction from a set of example demonstrations, then use the dynamics to infer the future states of both the human and the robot.
-This library was primarily developed to enable training and inference with Bayesian Interaction Primitives, however, it also supports Probabilistic Movement Primitives and Particle Filters as a baseline for comparison.
+This library was primarily developed to enable training and inference with Bayesian Interaction Primitives (BIP), however, it also supports Probabilistic Movement Primitives and Particle Filters as a baseline for comparison.
 
 ![](docs/notebooks/media/examples_new.png?raw=true)
 
@@ -13,7 +13,7 @@ A corresponding ROS package is available at https://github.com/ir-lab/intprim_fr
 
 ## Features
 
-* Train a BIP model from demonstrations
+* Train an Interaction Primitives model from demonstrations
 * Perform recursive inference with an Interaction Primitives model and generate future states
 * Support for inference with Ensemble Bayesian Interaction Primitives, Bayesian Interaction Primitives, Probabilistic Movement Primitives with DTW, and Particle Filter
 * Automatic basis space selection with support for Gaussian, Sigmoidal, and Polynomial functions
@@ -50,7 +50,7 @@ The following Python libraries must be installed before IntPrim can be used:
 ## Installation
 To install this library, download the package and in the root directory run:
 
-python setup.py build_ext install --user
+python setup.py install --user
 
 ## Feedback
 Questions or comments may be directed to Joseph Campbell at <jacampb1@asu.edu>, Simon Stepputtis at <sstepput@asu.edu>, or Heni Ben Amor <hbenamor@asu.edu>.
