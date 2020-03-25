@@ -2,6 +2,7 @@
 #   This module defines the base class for implementing the forward kinematics of your robot.
 #   The code taken from the code by Sebastian Gomez-Gonzalez at https://github.com/sebasutp/promp
 #
+#   @author Vignesh Prasad <vignesh.prasad@tu-darmstadt.de>, TU Darmstadt
 import numpy as np
 import scipy.optimize as opt
 
