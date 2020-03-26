@@ -173,15 +173,15 @@ class BaseKinematicsClass:
 	#   @return grad_nll Vector of dimension N containing the gradient of the cost function w.r.t. the current estimate theta.
 	#
 	def __laplace_cost_and_grad(self, theta, mu_theta, inv_sigma_theta, mu_x, inv_sigma_x):
-        f_th, jac_th, ori = self.position_and_jac(theta)
-        jac_th = jac_th[0:3,:]
-        diff1 = theta - mu_theta
-        tmp1 = np.dot(inv_sigma_theta, diff1)
-        diff2 = f_th - mu_x
-        tmp2 = np.dot(inv_sigma_x, diff2)
-        nll = 0.5*(np.dot(diff1,tmp1) + np.dot(diff2,tmp2))
-        grad_nll = tmp1 + np.dot(jac_th.T,tmp2)
-        return nll, grad_nll
+		f_th, jac_th, ori = self.position_and_jac(theta)
+		jac_th = jac_th[0:3,:]
+		diff1 = theta - mu_theta
+		tmp1 = np.dot(inv_sigma_theta, diff1)
+		diff2 = f_th - mu_x
+		tmp2 = np.dot(inv_sigma_x, diff2)
+		nll = 0.5*(np.dot(diff1,tmp1) + np.dot(diff2,tmp2))
+		grad_nll = tmp1 + np.dot(jac_th.T,tmp2)
+		return nll, grad_nll
 
 	##
 	#	Solves the Inverse Kinematics of the robot to reach a particular 3D location while trying to stick close to a prior distribution of the joint configuration.
@@ -194,16 +194,16 @@ class BaseKinematicsClass:
 	#   @param pos_mean Vector of dimension N containing the mean values of the posterior for each degree of freedom of the robot in radians (for angles) or meters (for translations) after solving the inverse kinematics.
 	#   @param pos_cov Matrix of dimension N x N containing the covariance matrix of the posterior for each degree of freedom of the robot after solving the inverse kinematics.
 	#
-    def inv_kin(self, mu_theta, sig_theta, mu_x, sig_x):
-        inv_sig_theta = np.linalg.inv(sig_theta)
-        inv_sig_x = np.linalg.inv(sig_x)
-        cost_grad = lambda theta: self.__laplace_cost_and_grad(theta, mu_theta, inv_sig_theta, mu_x, inv_sig_x)
-        cost = lambda theta: cost_grad(theta)[0]
-        grad = lambda theta: cost_grad(theta)[1]
-        res = opt.minimize(cost, mu_theta, method='BFGS', jac=grad)
-        post_mean = res.x
-		if hasattr(res, 'hess_inv')
-        	post_cov = res.hess_inv
-		else
+	def inv_kin(self, mu_theta, sig_theta, mu_x, sig_x):
+		inv_sig_theta = np.linalg.inv(sig_theta)
+		inv_sig_x = np.linalg.inv(sig_x)
+		cost_grad = lambda theta: self.__laplace_cost_and_grad(theta, mu_theta, inv_sig_theta, mu_x, inv_sig_x)
+		cost = lambda theta: cost_grad(theta)[0]
+		grad = lambda theta: cost_grad(theta)[1]
+		res = opt.minimize(cost, mu_theta, method='BFGS', jac=grad)
+		post_mean = res.x
+		if hasattr(res, 'hess_inv'):
+			post_cov = res.hess_inv
+		else:
 			post_cov = None
-        return post_mean, post_cov
+		return post_mean, post_cov
