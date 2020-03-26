@@ -5,7 +5,7 @@
 #	TODO: Implement the EM based learning with NIW prior
 #
 #   @author Vignesh Prasad <vignesh.prasad@tu-darmstadt.de>, TU Darmstadt
-import constants
+import intprim.constants
 import scipy.linalg
 import autograd.numpy as np
 import pickle
