@@ -283,9 +283,9 @@ class ProMP(object):
 	#
 	def generate_probable_trajectory(self, times, mean=None, var=None):
 		_mean, _var = self.get_basis_weight_parameters()
-		if mean==None:
+		if mean is None:
 			mean = _mean
-		if var==None:
+		if var is None:
 			var = _var
 
 		weights = np.random.multivariate_normal(mean, var)
@@ -296,7 +296,7 @@ class ProMP(object):
 	##
 	#   Get the PromP weights after conditioning to reach a particular joint configuration.
 	#
-	#   @param t Time Phase at which the required joint configuration should be reached.
+	#   @param t Scalar or Vector of length num_samples containing the time phase(s) at which the required joint configuration should be reached.
 	#   @paran mean_q Vector of dimension D containing the mean of the required joint configuration to be reached.
 	#   @param var_q Matrix of dimension B x B containing the sample covariance of the required joint configuration to be reached.
 	#   @paran mean_w Vector of dimension B containing the sample mean of the basis weights.
@@ -306,12 +306,17 @@ class ProMP(object):
 	#   @return var_w Matrix of dimension B x B containing the sample covariance of the basis weights after conditioning.
 	#
 	def get_conditioned_weights(self, t, mean_q, var_q=None, mean_w=None, var_w=None):
+		if isinstance(t, (list, tuple, np.ndarray)):
+			t = np.array(t)
+		else: # t is scalar
+			t = np.array([float(t)])
+
 		basis_funcs = self.basis_model.get_block_diagonal_basis_matrix(t)
 		d,lw = basis_funcs.shape
 		_mean_w, _var_w = self.get_basis_weight_parameters()
-		if mean_w==None:
+		if mean_w is None:
 			mean_w = _mean_w
-		if var_w==None:
+		if var_w is None:
 			var_w = _var_w
 
 		tmp1 = np.dot(var_w, basis_funcs)
@@ -326,9 +331,10 @@ class ProMP(object):
 
 		return mean_w, var_w
 
-	##	#   Get the marginal distribution of the learnt trajectory at a given time.
+	##
+	#   Get the marginal distribution of the learnt trajectory at a given time.
 	#
-	#   @param t Time Phase at which the marginal distribution is to be calculated.
+	#   @param t Scalar or Vector of length num_samples containing the time phase(s) at which the required joint configuration should be reached.
 	#   @paran mean_w Vector of dimension B containing the sample mean of the basis weights.
 	#   @param var_w Matrix of dimension B x B containing the sample covariance of the basis weights.
 	#
@@ -336,12 +342,17 @@ class ProMP(object):
 	#   @return var_q Matrix of dimension B x B containing the sample covariance of the marginal distribution at the given time.
 	#
 	def get_marginal(self, t, mean_w=None, var_w=None):
-		basis_funcs = self.basis_model.get_block_diagonal_basis_matrix(t/T)
+		if isinstance(t, (list, tuple, np.ndarray)):
+			t = np.array(t)
+		else: # t is scalar
+			t = np.array([float(t)])
+
+		basis_funcs = self.basis_model.get_block_diagonal_basis_matrix(t)
 		d,lw = basis_funcs.shape
 		_mean_w, _var_w = self.get_basis_weight_parameters()
-		if mean_w==None:
+		if mean_w is None:
 			mean_w = _mean_w
-		if var_w==None:
+		if var_w is None:
 			var_w = _var_w
 
 		var_q = np.dot(basis_funcs.T, np.dot(var_w, basis_funcs))

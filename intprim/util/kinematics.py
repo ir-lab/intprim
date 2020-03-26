@@ -36,7 +36,7 @@ class BaseKinematicsClass:
 	#
 	#   @param q Vector of dimension N containing the values for each degree of freedom of the robot in radians (for angles) or meters (for translations).
 	#
-	#   @return absolute_transforms list of N + 1 Transformation Matrices each  having dimensions 4 x 4. The first N matrices  represent the pose of the reference frames of each of the N degrees of freedon in the global frame. The ith matrix is the relative transformation between the global frame to the ith frame of reference  The last matrix if the transformation to the final end effector link.
+	#   @return absolute_transforms list of N + 1 Transformation Matrices each  having dimensions 4 x 4. The first N matrices represent the pose of the reference frames of each of the N degrees of freedon in the global frame. The ith matrix is the relative transformation between the global frame to the ith frame of reference  The last matrix if the transformation to the final end effector link.
 	#
 	def forward_kinematics(self,q):
 		H = self._link_matrices(q)
@@ -70,7 +70,7 @@ class BaseKinematicsClass:
 	#   @return orientation Vector of size 3 with the yaw, pitch and roll angles of the end effector.
 	#
 	def end_effector(self, q ,As=None):
-		if As==None:
+		if As is None:
 			As = self.forward_kinematics(q)
 		end_eff = As[-1]
 		pos = end_eff[0:3,3]
@@ -105,7 +105,7 @@ class BaseKinematicsClass:
 	#
 	def __analytic_jac(self, q, As=None):
 		jac = np.zeros((6,len(q)))
-		if As == None:
+		if As is None:
 			As = self.forward_kinematics(q)
 		pe = As[-1][0:3,3]
 		for i in xrange(len(q)):
@@ -113,7 +113,7 @@ class BaseKinematicsClass:
 			pprev = As[i][0:3,3]
 			jac[0:3,i] = np.cross(zprev, pe - pprev)
 			jac[3:6,i] = zprev
-		return ans
+		return jac
 
 	##
 	#	Calculates the jacobian of the forward kinemnatics of the robot.
@@ -181,6 +181,7 @@ class BaseKinematicsClass:
 		tmp2 = np.dot(inv_sigma_x, diff2)
 		nll = 0.5*(np.dot(diff1,tmp1) + np.dot(diff2,tmp2))
 		grad_nll = tmp1 + np.dot(jac_th.T,tmp2)
+
 		return nll, grad_nll
 
 	##
@@ -194,16 +195,20 @@ class BaseKinematicsClass:
 	#   @param pos_mean Vector of dimension N containing the mean values of the posterior for each degree of freedom of the robot in radians (for angles) or meters (for translations) after solving the inverse kinematics.
 	#   @param pos_cov Matrix of dimension N x N containing the covariance matrix of the posterior for each degree of freedom of the robot after solving the inverse kinematics.
 	#
-	def inv_kin(self, mu_theta, sig_theta, mu_x, sig_x):
+	def inv_kin(self, mu_theta, sig_theta, mu_x, sig_x, **kwargs):
 		inv_sig_theta = np.linalg.inv(sig_theta)
 		inv_sig_x = np.linalg.inv(sig_x)
 		cost_grad = lambda theta: self.__laplace_cost_and_grad(theta, mu_theta, inv_sig_theta, mu_x, inv_sig_x)
 		cost = lambda theta: cost_grad(theta)[0]
 		grad = lambda theta: cost_grad(theta)[1]
-		res = opt.minimize(cost, mu_theta, method='BFGS', jac=grad)
+
+		kwargs.setdefault('method', 'BFGS')
+		kwargs.setdefault('jac', grad)
+		res = opt.minimize(cost, mu_theta, **kwargs)
 		post_mean = res.x
 		if hasattr(res, 'hess_inv'):
 			post_cov = res.hess_inv
 		else:
 			post_cov = None
+		print res
 		return post_mean, post_cov
