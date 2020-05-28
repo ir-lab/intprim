@@ -4,10 +4,15 @@ Interaction Primitives are a human-robot interaction (HRI) framework based on im
 The objective of this framework is to extract the dynamics of an interaction from a set of example demonstrations, then use the dynamics to infer the future states of both the human and the robot.
 This library was primarily developed to enable training and inference with Bayesian Interaction Primitives (BIP), however, it also supports Probabilistic Movement Primitives and Particle Filters as a baseline for comparison.
 
-![](docs/notebooks/media/examples_new.png?raw=true)
+| | |
+|-|-|
+| ![](docs/notebooks/media/catching_lq.gif?raw=true) | ![](docs/notebooks/media/hugging_lq.gif?raw=true) |
+| ![](docs/notebooks/media/walking_lq.gif?raw=true) | ![](docs/notebooks/media/box_lq.gif?raw=true) |
 
-This library has been successfully deployed in real-world HRI scenarios involving cooperative object manipulation, shaking hands, hugging, grasping, and more!
+This library has been successfully deployed in real-world HRI scenarios (some of which are shown above) involving cooperative object manipulation, shaking hands, hugging, grasping, and more!
 A list of peer-reviewed publications that have utilized this library can be found below.
+
+This library was created by Joseph Campbell, Simon Stepputtis, Michael Drolet, and Heni Ben Amor from Arizona State University.
 
 A corresponding ROS package is available at https://github.com/ir-lab/intprim_framework_ros which greatly simplifies the process of setting up and running real experiments with the IntPrim library.
 
@@ -57,8 +62,25 @@ Questions or comments may be directed to Joseph Campbell at <jacampb1@asu.edu>, 
 
 http://interactive-robotics.engineering.asu.edu/interaction-primitives/
 
+
+## Further Information
+For further information, please consult the below peer-reviewed conference papers:
+
+| | | |
+|-|-|-|
+| <a href="https://arxiv.org/pdf/1908.04955.pdf">![](docs/notebooks/media/joe_rss19.png?raw=true)</a> | <a href="https://arxiv.org/pdf/1908.05552">![](docs/notebooks/media/joe_iros19.png?raw=true)</a> | <a href="http://proceedings.mlr.press/v78/campbell17a/campbell17a.pdf">![](docs/notebooks/media/joe_corl17.png?raw=true)</a> |
+
+We have also made several conference presentations available to watch:
+
+| | |
+|-|-|
+| <a href="https://youtu.be/vgkxR9TDqhY?t=9913">![](docs/notebooks/media/joe_rss19_play.png?raw=true)</a> | <a href="https://youtu.be/_9Ny2ghjwuY?t=26862">![](docs/notebooks/media/joe_corl17_play.png?raw=true)</a> |
+| <a href="https://drive.google.com/open?id=1b6csa9OnmF7gL3DOy7d8WeMYh3YXA0hF">![](docs/notebooks/media/joe_icra20_play.png?raw=true)</a> | <a href="https://youtu.be/EjSVjueePyQ">![](docs/notebooks/media/geoff_icra20_play.png?raw=true)</a> |
+
+
 ## Citation
 If you use this library, please cite one of the following papers:
+
 ```
 @InProceedings{campbell2019probabilistic,
   title={Probabilistic Multimodal Modeling for Human-Robot Interaction Tasks},
@@ -67,6 +89,7 @@ If you use this library, please cite one of the following papers:
   year={2019}
 }
 ```
+
 ```
 @InProceedings{campbell19bayesian,
   title = {Bayesian Interaction Primitives: A SLAM Approach to Human-Robot Interaction},
@@ -89,12 +112,21 @@ This project is licensed under the MIT license, included in this directory.
 
 ## Used By
 
-This library has been developed by Joseph Campbell at Arizona State University and has been utilized in the following works:
+This library has been developed by Joseph Campbell at Arizona State University with contributions from Simon Stepputtis, Michael Drolet, and Heni Ben Amor.
+This library (or variations thereof) has been successfully utilized in the following works:
 
-J. Campbell, S. Stepputtis, and H. Ben Amor. Probabilistic Multimodal Modeling for Human-Robot Interaction Tasks. Robotics: Science and Systems (RSS) 2019.
+[J. Campbell and K. Yamane. Learning Whole-Body Human-Robot Haptic Interaction in Social Contexts. International Conference on Robotics and Automation (ICRA) 2020.](https://arxiv.org/pdf/2005.12508.pdf)
 
-J. Campbell, A. Hitzmann, S. Stepputtis, S. Ikemoto, K. Hosoda, and H. Ben Amor. Learning Interactive Behaviors for Musculoskeletal Robots Using Bayesian Interaction Primitives. International Conference on Intelligent Robots and Systems (IROS) 2019.
+[J. Campbell, S. Stepputtis, and H. Ben Amor. Probabilistic Multimodal Modeling for Human-Robot Interaction Tasks. Robotics: Science and Systems (RSS) 2019.](https://arxiv.org/pdf/1908.04955.pdf)
 
-K. Bagewadi, J. Campbell, and H. Ben Amor. Multimodal Dataset of Human-Robot Hugging Interaction. AAAI Fall Symposium on Artificial Intelligence for Human-Robot Interaction (AI-HRI), November 2019.
+[J. Campbell, A. Hitzmann, S. Stepputtis, S. Ikemoto, K. Hosoda, and H. Ben Amor. Learning Interactive Behaviors for Musculoskeletal Robots Using Bayesian Interaction Primitives. International Conference on Intelligent Robots and Systems (IROS) 2019.](https://arxiv.org/pdf/1908.05552.pdf)
 
-J. Campbell and H. Ben Amor. Bayesian Interaction Primitives: A SLAM Approach to Human-Robot Interaction. Conference on Robot Learning (CoRL) 2017.
+[K. Bagewadi, J. Campbell, and H. Ben Amor. Multimodal Dataset of Human-Robot Hugging Interaction. AAAI Fall Symposium on Artificial Intelligence for Human-Robot Interaction (AI-HRI), November 2019.](https://arxiv.org/pdf/1909.07471.pdf)
+
+[J. Campbell and H. Ben Amor. Bayesian Interaction Primitives: A SLAM Approach to Human-Robot Interaction. Conference on Robot Learning (CoRL) 2017.](http://proceedings.mlr.press/v78/campbell17a/campbell17a.pdf)
+
+## Acknowledgements
+
+This work was supported in part by the National Science Foundation under grant No. IIS-1749783 and the Honda Research Institute.
+
+![](docs/notebooks/media/acknowledgement_logos.png?raw=true)
