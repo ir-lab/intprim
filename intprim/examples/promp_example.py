@@ -9,8 +9,8 @@ from intprim.util.kinematics import BaseKinematicsClass
 
 
 # Load the sample data from https://github.com/sebasutp/promp/blob/master/examples/strike_mov.npz
-with open('strike_mov.npz','r') as f:
-	data = np.load(f,allow_pickle=True)
+with open('strike_mov.npz','rb') as f:
+	data = np.load(f, allow_pickle=True, encoding='bytes')
 	time = data['time']
 	Q = data['Q']
 num_joints = Q[0].shape[1]

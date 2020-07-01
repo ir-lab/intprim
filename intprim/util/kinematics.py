@@ -42,7 +42,7 @@ class BaseKinematicsClass:
 		H = self._link_matrices(q)
 		A = H[0]
 		absolute_transforms = []
-		for i in xrange(1,len(H)):
+		for i in range(1,len(H)):
 			A = np.dot(A,H[i])
 			absolute_transforms.append(A)
 		return absolute_transforms
@@ -88,7 +88,7 @@ class BaseKinematicsClass:
 	def __num_jac(self, q, eps = 1e-6):
 		jac = np.zeros((3,len(q)))
 		fx,ori = self.end_effector(q)
-		for i in xrange(len(q)):
+		for i in range(len(q)):
 			q[i] += eps
 			fxh,ori = self.end_effector(q)
 			jac[:,i] = (fxh - fx) / eps
@@ -108,7 +108,7 @@ class BaseKinematicsClass:
 		if As is None:
 			As = self.forward_kinematics(q)
 		pe = As[-1][0:3,3]
-		for i in xrange(len(q)):
+		for i in range(len(q)):
 			zprev = As[i][0:3,2]
 			pprev = As[i][0:3,3]
 			jac[0:3,i] = np.cross(zprev, pe - pprev)
@@ -154,7 +154,7 @@ class BaseKinematicsClass:
 	def end_eff_trajectory(self, Q):
 		pos = []
 		orientation = []
-		for t in xrange(len(Q)):
+		for t in range(len(Q)):
 			post, ort = self.end_effector(Q[t])
 			pos.append(post)
 			orientation.append(ort)
@@ -210,5 +210,5 @@ class BaseKinematicsClass:
 			post_cov = res.hess_inv
 		else:
 			post_cov = None
-		print res
+		print(res)
 		return post_mean, post_cov

@@ -2,7 +2,7 @@
 #   This module defines the PolynomialModel class.
 #
 #   @author Joseph Campbell <jacampb1@asu.edu>, Interactive Robotics Lab, Arizona State University
-import basis_model
+from intprim.basis import basis_model
 import intprim.constants
 import numpy as np
 

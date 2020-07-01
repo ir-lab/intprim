@@ -7,7 +7,8 @@ import numpy.linalg
 import scipy.linalg
 
 import intprim.constants as constants
-import nonlinear_system
+from intprim.filter.spatiotemporal import nonlinear_system
+
 
 ##
 #   The EnsembleKalmanFilter class localizes an interaction in time and space via Monte Carlo approximation of the Kalman filter.

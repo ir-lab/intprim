@@ -11,7 +11,7 @@ import scipy.linalg
 import scipy.stats
 
 import intprim.constants
-import nonlinear_system
+from intprim.filter.spatiotemporal import nonlinear_system
 
 ##
 #   The ParticleFilter class localizes an interaction in time and space via sequential Monte Carlo sampling.
