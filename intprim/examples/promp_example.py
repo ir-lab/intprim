@@ -9,7 +9,7 @@ from intprim.util.kinematics import BaseKinematicsClass
 
 
 # Load the sample data from https://github.com/sebasutp/promp/blob/master/examples/strike_mov.npz
-with open('strike_mov.npz','rb') as f:
+with open('/home/corobi/playground/intprim_test/strike_mov.npz','rb') as f:
 	data = np.load(f, allow_pickle=True, encoding='bytes')
 	time = data['time']
 	Q = data['Q']
@@ -75,6 +75,41 @@ plt.plot(domain, mean_margs, 'b-')
 plt.title('Joint Space Conditioned Samples for DoF {}'.format(plot_dof))
 plt.show()
 
+q_cond = np.random.choice(Q)
+q_domain = np.linspace(0, 1, len(q_cond))
+print('len(q_cond):',len(q_cond))
+print('q_cond.shape',q_cond.shape)
+
+# Condition the ProMP and obtain the posterior distribution.
+mu_w_cond_rec, Sigma_w_cond_rec = promp.get_conditioned_weights(q_domain[0], q_cond[0])
+print('det:',np.linalg.det(Sigma_w_cond_rec))
+num_observed = 25
+for i in range(1, num_observed):
+	mu_w_cond_rec, Sigma_w_cond_rec = promp.get_conditioned_weights(q_domain[i], q_cond[i], mean_w=mu_w_cond_rec, var_w=Sigma_w_cond_rec)
+print('det:',np.linalg.det(Sigma_w_cond_rec))
+# Plot samples of the conditioned ProMP drawn from the predicted posterior.
+plt.plot(q_domain[:num_observed],q_cond[:num_observed,plot_dof],'bo', alpha=0.3)
+plt.plot(q_domain[num_observed:],q_cond[num_observed:,plot_dof],'ro', alpha=0.3)
+for i in range(n_samples):
+	samples, _ = promp.generate_probable_trajectory(domain, mu_w_cond_rec, Sigma_w_cond_rec)
+	plt.plot(domain, samples[plot_dof,:], 'b--', alpha=0.3)
+
+mean_margs = np.zeros(samples[plot_dof,:].shape)
+upper_bound = np.zeros(samples[plot_dof,:].shape)
+lower_bound = np.zeros(samples[plot_dof,:].shape)
+std_Q = []
+for i in range(len(domain)):
+	mu_marg_q, Sigma_marg_q = promp.get_marginal(domain[i], mu_w_cond_rec, Sigma_w_cond_rec)
+	std_q = Sigma_marg_q[plot_dof][plot_dof]
+	std_Q.append(std_q)
+	mean_margs[i] = mu_marg_q[plot_dof]
+	upper_bound[i] = mu_marg_q[plot_dof] + std_q
+	lower_bound[i] = mu_marg_q[plot_dof] - std_q
+print('mean_std-Q:',np.mean(std_Q))
+plt.fill_between(domain, upper_bound, lower_bound, color = 'b', alpha=0.2)
+plt.plot(domain, mean_margs, 'b-')
+plt.title('Joint Space Recursively Conditioned Samples for DoF {}'.format(plot_dof))
+plt.show()
 
 class BarrettKinematics(BaseKinematicsClass):
 	''' Forward kinematics object for the Barrett Wam

@@ -321,13 +321,17 @@ class ProMP(object):
 
 		tmp1 = np.dot(var_w, basis_funcs)
 		tmp2 = np.dot(basis_funcs.T, np.dot(var_w, basis_funcs))
+		if var_q is not None:
+			tmp2 += var_q
+		else:
+			tmp2 += np.eye(tmp2.shape[0])*1e-7
 		tmp2 = np.linalg.inv(tmp2)
 		tmp3 = np.dot(tmp1,tmp2)
 		mean_w = mean_w + np.dot(tmp3, (mean_q - np.dot(basis_funcs.T, mean_w)))
-		tmp4 = np.eye(lw)
-		if var_q is not None:
-			tmp4 -= np.dot(var_q, tmp2)
-		var_w = var_w - np.dot(tmp3, np.dot(tmp4, tmp1.T))
+		# tmp4 = np.eye(lw)
+		# if var_q is not None:
+		# 	tmp4 -= np.dot(var_q, tmp2)
+		var_w = var_w - np.dot(tmp3, tmp1.T)
 
 		return mean_w, var_w
 
