@@ -310,7 +310,9 @@ class ProMP(object):
 			t = np.array(t)
 		else: # t is scalar
 			t = np.array([float(t)])
-
+		if var_q is None:
+			var_q = np.eye(len(mean_q))*1e-7
+		
 		basis_funcs = self.basis_model.get_block_diagonal_basis_matrix(t)
 		d,lw = basis_funcs.shape
 		_mean_w, _var_w = self.get_basis_weight_parameters()
@@ -320,18 +322,9 @@ class ProMP(object):
 			var_w = _var_w
 
 		tmp1 = np.dot(var_w, basis_funcs)
-		tmp2 = np.dot(basis_funcs.T, np.dot(var_w, basis_funcs))
-		if var_q is not None:
-			tmp2 += var_q
-		else:
-			tmp2 += np.eye(tmp2.shape[0])*1e-7
-		tmp2 = np.linalg.inv(tmp2)
-		tmp3 = np.dot(tmp1,tmp2)
-		mean_w = mean_w + np.dot(tmp3, (mean_q - np.dot(basis_funcs.T, mean_w)))
-		# tmp4 = np.eye(lw)
-		# if var_q is not None:
-		# 	tmp4 -= np.dot(var_q, tmp2)
-		var_w = var_w - np.dot(tmp3, tmp1.T)
+		K = tmp1.dot(np.linalg.inv(var_q + basis_funcs.T.dot(tmp1)))
+		mean_w += K.dot(mean_q - basis_funcs.T.dot(mean_w))
+		var_w -= K.dot(basis_funcs.T.dot(var_w))
 
 		return mean_w, var_w
 
