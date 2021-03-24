@@ -22,6 +22,7 @@ A corresponding ROS package is available at https://github.com/ir-lab/intprim_fr
 * Support for inference with Ensemble Bayesian Interaction Primitives, Bayesian Interaction Primitives, Probabilistic Movement Primitives with DTW, and Particle Filter
 * Automatic basis space selection with support for Gaussian, Sigmoidal, and Polynomial functions
 * Automatic computation of the observation noise
+* Optimize interactions with Model Predictive Control scheme
 * Comprehensive interactive analysis tools
 * Integration with ROS via https://github.com/ir-lab/intprim_framework_ros
 
@@ -35,6 +36,7 @@ A set of tutorials and documentation about IntPrim has been provided in the foll
 2. [Quickstart](docs/notebooks/2_quickstart.ipynb)
 3. [In-depth Tutorial](docs/notebooks/3_indepth_tutorial.ipynb)
 4. [Mathematical Details](docs/notebooks/4_mathematical_details.ipynb)
+5. [Optimizing Interactions](docs/notebooks/5_optimizing_interactions.ipynb)
 
 Additionally, the API and associated documentation can be found here:
 
@@ -57,7 +59,7 @@ To install this library, download the package and in the root directory run:
 python setup.py install --user
 
 ## Feedback
-Questions or comments may be directed to Joseph Campbell at <jacampb1@asu.edu>, Simon Stepputtis at <sstepput@asu.edu>, or Heni Ben Amor <hbenamor@asu.edu>.
+Questions or comments may be directed to Joseph Campbell at <jacampb1@asu.edu>, Simon Stepputtis at <sstepput@asu.edu>, Geoffrey Clark at <gmclark1@asu.edu>, or Heni Ben Amor <hbenamor@asu.edu>.
 
 http://interactive-robotics.engineering.asu.edu/interaction-primitives/
 
@@ -111,7 +113,7 @@ This project is licensed under the MIT license, included in this directory.
 
 ## Used By
 
-This library has been developed by Joseph Campbell at Arizona State University with contributions from Simon Stepputtis, Michael Drolet, and Heni Ben Amor.
+This library has been developed by Joseph Campbell at Arizona State University with contributions from Simon Stepputtis, Geoffrey Clark, Michael Drolet, and Heni Ben Amor.
 This library (or variations thereof) has been successfully utilized in the following works:
 
 [J. Campbell and K. Yamane. Learning Whole-Body Human-Robot Haptic Interaction in Social Contexts. International Conference on Robotics and Automation (ICRA) 2020.](https://arxiv.org/pdf/2005.12508.pdf)
@@ -123,6 +125,10 @@ This library (or variations thereof) has been successfully utilized in the follo
 [K. Bagewadi, J. Campbell, and H. Ben Amor. Multimodal Dataset of Human-Robot Hugging Interaction. AAAI Fall Symposium on Artificial Intelligence for Human-Robot Interaction (AI-HRI), November 2019.](https://arxiv.org/pdf/1909.07471.pdf)
 
 [J. Campbell and H. Ben Amor. Bayesian Interaction Primitives: A SLAM Approach to Human-Robot Interaction. Conference on Robot Learning (CoRL) 2017.](http://proceedings.mlr.press/v78/campbell17a/campbell17a.pdf)
+
+[G. Clark, J. Campbell, S.M.R. Sorkhabadi, W. Zhang, and H. Ben Amor. Predictive Modeling of Periodic Behavior for Human-Robot Symbiotic Walking](https://arxiv.org/pdf/2005.13139.pdf)
+
+[G. Clark, J. Campbell, and H. Ben Amor. Learning Predictive Models for Ergonomic Control of Prosthetic Devices](https://arxiv.org/pdf/2011.07005.pdf)
 
 ## Acknowledgements
 
