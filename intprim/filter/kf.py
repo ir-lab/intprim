@@ -6,8 +6,8 @@ import numpy as np
 import scipy.linalg
 
 import intprim.constants
-import align.dtw
-import linear_system
+from intprim.filter.align import dtw
+from intprim.filter import linear_system
 
 ##
 #   The KalmanFilter class localizes an interaction in space via the extended Kalman filter.
@@ -36,7 +36,7 @@ class KalmanFilter(linear_system.LinearSystem):
                  basis_model,
                  mean_basis_weights,
                  cov_basis_weights,
-                 align_func = align.dtw.fastdtw,
+                 align_func = dtw.fastdtw,
                  iterative_alignment = False,
                  num_align_samples = 100,
                  cyclical = False):
