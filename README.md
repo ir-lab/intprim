@@ -36,7 +36,7 @@ A set of tutorials and documentation about IntPrim has been provided in the foll
 2. [Quickstart](docs/notebooks/2_quickstart.ipynb)
 3. [In-depth Tutorial](docs/notebooks/3_indepth_tutorial.ipynb)
 4. [Mathematical Details](docs/notebooks/4_mathematical_details.ipynb)
-5. [Optimizing Interactions](docs/notebooks/5_optimizing_interactions.ipynb)
+5. [Model Predictive Control with Interaction Primitives](docs/notebooks/5_optimizing_interactions.ipynb)
 
 Additionally, the API and associated documentation can be found here:
 
@@ -76,7 +76,7 @@ We have also made several conference presentations available to watch:
 | | |
 |-|-|
 | <a href="https://youtu.be/vgkxR9TDqhY?t=9913">![](docs/notebooks/media/joe_rss19_play.png?raw=true)</a> | <a href="https://youtu.be/_9Ny2ghjwuY?t=26862">![](docs/notebooks/media/joe_corl17_play.png?raw=true)</a> |
-| <a href="https://drive.google.com/open?id=1b6csa9OnmF7gL3DOy7d8WeMYh3YXA0hF">![](docs/notebooks/media/joe_icra20_play.png?raw=true)</a> | <a href="https://youtu.be/EjSVjueePyQ">![](docs/notebooks/media/geoff_icra20_play.png?raw=true)</a> |
+| <a href="https://drive.google.com/open?id=1b6csa9OnmF7gL3DOy7d8WeMYh3YXA0hF">![](docs/notebooks/media/joe_icra20_play.png?raw=true)</a> | <a href="https://youtu.be/DxQPF3VwuoA">![](docs/notebooks/media/geoffrey_corlplay1.png?raw=true)</a> |
 
 
 ## Citation
