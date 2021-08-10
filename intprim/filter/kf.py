@@ -159,3 +159,55 @@ class KalmanFilter(linear_system.LinearSystem):
 
         # Return phase and updated weights and covariance
         return self.last_phase_estimate, self.state_mean, self.state_cov
+
+    ##
+    #   This method performs localization of space (basis weights) for a single sample and a known phase.
+    #   This is NOT a recursive call, which means it DOES NOT update the internal state estimate based on the given observations.
+    #   In case the internal state needs to be updated, for example when having a fixed ending location or so, it can be done externally from the code making this call.
+    #   For each call, two steps are performed:
+    #   First, the current state is propagated forward in time in what is known as the prediction step.
+    #   $$ \\begin{align}
+    #   \\boldsymbol{\\mu}_{t|t-1} &=
+    #   \\boldsymbol{G}$
+    #   \\boldsymbol{\\mu}_{t-1|t-1},\\
+    #   %
+    #   \\boldsymbol{\\Sigma}_{t|t-1} &= \\boldsymbol{G} \\boldsymbol{\\Sigma}_{t-1|t-1} \\boldsymbol{G}^{T} +
+    #   \\boldsymbol{Q}_t,
+    #   \\end{align} $$
+    #   In practice, the prediction does nothing for spatial filters because basis weights are time invariant.
+    #
+    #   Next, we integrate the observations into the current state in the update step.
+    #   $$ \\begin{align}
+    #   \\boldsymbol{K}_t &= \\boldsymbol{\\Sigma}_{t|t-1} \\boldsymbol{H}_t^{T} (\\boldsymbol{H}_t \\boldsymbol{\\Sigma}_{t|t-1} \\boldsymbol{H}_t^{T} + \\boldsymbol{R}_t)^{-1},\\
+    #   %
+    #   \\boldsymbol{\\mu}_{t|t} &= \\boldsymbol{\\mu}_{t|t-1} + \\boldsymbol{K}_t(\\boldsymbol{y}_t - h(\\boldsymbol{\\mu}_{t|t-1})),\\
+    #   %
+    #   \\boldsymbol{\\Sigma}_{t|t} &= (I - \\boldsymbol{K}_t \\boldsymbol{H}_t)\\boldsymbol{\\Sigma}_{t|t-1},
+    #   \\end{align} $$
+    #
+    #   Lastly, the mean and covariance of the state are returned.
+    #
+    #   @param measurement Matrix of dimension D containing an observation at a given phase where D is the dimension of the measurement space.
+    #   @param measurement_noise Matrix of dimension D x D containing the measurement noise for the given set of measurements.
+    #   @param measurement_phase The phase for which the current measurement is taken.
+    #
+    #   @returns Vector of dimension D containing inferred mean, Matrix of dimension D x D containing inferred covariance.
+    def localize_single(self, measurement, measurement_noise, measurement_phase):
+        transition_model = self.get_transition_model()
+
+        # Make forward prediction
+        state_mean = np.dot(transition_model, self.state_mean)
+        state_cov = np.dot(transition_model, self.state_cov).dot(transition_model.T) + self.get_process_noise()
+
+        measurement_model = self.get_measurement_model(np.array([measurement_phase]))
+        predicted_measurement = np.dot(measurement_model, state_mean)
+
+        kalman_gain = np.dot(state_cov, measurement_model.T)
+        kalman_gain = kalman_gain.dot(scipy.linalg.inv(np.dot(measurement_model, state_cov).dot(measurement_model.T) + measurement_noise))
+
+        state_mean += np.dot(kalman_gain, measurement - predicted_measurement)
+
+        state_cov = (self.identity_cov - np.dot(kalman_gain, measurement_model)).dot(state_cov)
+
+        # Return phase and updated weights and covariance
+        return state_mean, state_cov
