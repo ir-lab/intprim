@@ -189,10 +189,11 @@ class KalmanFilter(linear_system.LinearSystem):
     #
     #   @param measurement Matrix of dimension D containing an observation at a given phase where D is the dimension of the measurement space.
     #   @param measurement_noise Matrix of dimension D x D containing the measurement noise for the given set of measurements.
+    #   @param active_dofs Vector of dimension \f$ D_o \f$ containing measurement space indices of the observed degrees of freedom. This is not used for this filter but is maintained for API compatibility with the others filters.
     #   @param measurement_phase The phase for which the current measurement is taken.
     #
     #   @returns Vector of dimension D containing inferred mean, Matrix of dimension D x D containing inferred covariance.
-    def localize_single(self, measurement, measurement_noise, measurement_phase):
+    def localize_single(self, measurement, measurement_noise, active_dofs, measurement_phase):
         transition_model = self.get_transition_model()
 
         # Make forward prediction

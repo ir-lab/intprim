@@ -165,7 +165,7 @@ class BayesianInteractionPrimitive(object):
     #   @return approximate_trajectory Matrix of dimension D x num_samples containing the approximate trajectory.
     #
     def get_approximate_trajectory_derivative(self, trajectory, num_samples = intprim.constants.DEFAULT_NUM_SAMPLES):
-        return get_approximate_trajectory(trajectory, num_samples, deriv = True)
+        return self.get_approximate_trajectory(trajectory, num_samples, deriv = True)
 
     ##
     #   Gets the probability distribution of the trained demonstrations.
