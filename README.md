@@ -130,7 +130,7 @@ This library (or variations thereof) has been successfully utilized in the follo
 
 [G. Clark, J. Campbell, and H. Ben Amor. Learning Predictive Models for Ergonomic Control of Prosthetic Devices](https://arxiv.org/pdf/2011.07005.pdf)
 
-[Learning Human-like Hand Reaching for Human-Robot Handshaking](https://arxiv.org/abs/2103.00616)
+[V. Prasad, R. Stock-Homburg, and J. Peters. Learning Human-like Hand Reaching for Human-Robot Handshaking](https://arxiv.org/abs/2103.00616)
 
 ## Acknowledgements
 

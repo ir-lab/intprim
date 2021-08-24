@@ -7,7 +7,7 @@
 #   @author Vignesh Prasad <vignesh.prasad@tu-darmstadt.de>, TU Darmstadt
 import intprim.constants
 import scipy.linalg
-import autograd.numpy as np
+import numpy as np
 import pickle
 import sklearn.preprocessing
 
