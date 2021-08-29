@@ -6,7 +6,7 @@ import numpy as np
 import scipy.linalg
 
 import intprim.constants
-import nonlinear_system
+from intprim.filter.spatiotemporal import nonlinear_system
 
 ##
 #   The ExtendedKalmanFilter class localizes an interaction in time and space via the extended Kalman filter.
@@ -154,7 +154,7 @@ class ExtendedKalmanFilter(nonlinear_system.NonLinearSystem):
                 self.state_mean[0] = 0.0
 
             measurement_model = self.get_measurement_model(self.state_mean)
-            predicted_measurement = np.dot(measurement_model[:,self.system_size:], self.basis_model.inverse_transform(self.state_mean[self.system_size:]))
+            predicted_measurement = np.dot(measurement_model[:,self.system_size:], self.state_mean[self.system_size:])
 
             kalman_gain = np.dot(self.state_cov, measurement_model.T)
             kalman_gain = kalman_gain.dot(scipy.linalg.inv(np.dot(measurement_model, self.state_cov).dot(measurement_model.T) + measurement_noise))

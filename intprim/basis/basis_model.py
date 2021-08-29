@@ -34,7 +34,7 @@ class BasisModel(object):
     #   Gets the block diagonal basis matrix for the given phase value(s).
     #   Used to transform vectors from the basis space to the measurement space.
     #
-    #   @param x Scalar of vector of dimension T containing the phase values to use in the creation of the block diagonal matrix.
+    #   @param x Scalar or vector of dimension T containing the phase values to use in the creation of the block diagonal matrix.
     #   @param out_array Matrix of dimension greater to or equal than (degree * num_observed_dof * T) x num_observed_dof in which the results are stored. If none, an internal matrix is used.
     #   @param start_row A row offset to apply to results in the block diagonal matrix.
     #   @param start_col A column offset to apply to results in the block diagonal matrix.
@@ -46,6 +46,8 @@ class BasisModel(object):
             out_array = self.block_prototype
 
         basis_funcs = self.get_basis_functions(x)
+        if np.isscalar(x):
+            basis_funcs = basis_funcs[:, None]
         for block_index in range(self._num_blocks):
             out_array[start_row + block_index * self._degree : start_row + (block_index + 1) * self._degree, start_col + block_index : start_col + block_index + 1] = basis_funcs
 
@@ -67,6 +69,8 @@ class BasisModel(object):
             out_array = self.block_prototype
 
         basis_funcs = self.get_basis_function_derivatives(x)
+        if np.isscalar(x):
+            basis_funcs = basis_funcs[:, None]
         for block_index in range(self._num_blocks):
             out_array[start_row + block_index * self._degree : start_row + (block_index + 1) * self._degree, start_col + block_index : start_col + block_index + 1] = basis_funcs
 
@@ -88,7 +92,7 @@ class BasisModel(object):
             out_array = np.zeros((1, self._degree))
 
         out_row = start_row
-        basis_func_derivs = self.get_basis_function_derivatives(x[0])
+        basis_func_derivs = self.get_basis_function_derivatives(x)
 
         # temp_weights = self.inverse_transform(weights)
         temp_weights = weights

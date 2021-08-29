@@ -58,14 +58,15 @@ observation_noise = np.diag([10000.0, train_noise_std ** 2])
 
 # Compute the phase mean and phase velocities from the demonstrations.
 phase_velocity_mean, phase_velocity_var = intprim.examples.get_phase_stats(training_trajectories)
-
+mean_w, cov_w = primitive.get_basis_weight_parameters()
 # Define a filter to use. Here we use an ensemble Kalman filter
-filter = intprim.filter.spatiotemporal.EnsembleKalmanFilter(
+filter = intprim.filter.spatiotemporal.ExtendedKalmanFilter(
     basis_model = basis_model,
     initial_phase_mean = [0.0, phase_velocity_mean],
     initial_phase_var = [1e-4, phase_velocity_var],
     proc_var = 1e-8,
-    initial_ensemble = primitive.basis_weights)
+    mean_basis_weights = mean_w,
+    cov_basis_weights = cov_w)
 
 
 
